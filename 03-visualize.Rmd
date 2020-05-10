@@ -7,6 +7,8 @@ output: html_document
 
 The first chunk in an R Notebook is usually titled "setup," and by convention includes the R packages you want to load. Remember, in order to use an R package you have to run some `library()` code every session. Execute these lines of code to load the packages. 
 
+## Your turn 1
+
 ```{r setup}
 # install.packages("tidyverse")
 library(tidyverse)
@@ -14,10 +16,18 @@ library(tidyverse)
 
 ## Datasets
 
+## Your turn 1
+
+Type and run this code to load one dataset. Pay strict attention to spelling, capitalization, and parentheses!
+
 ```{r}
 # National Parks in California
 ca <- read_csv("https://bit.ly/03-data-ca")
+```
 
+Load the remaining datasets.
+
+```{r}
 # Acadia National Park
 acadia <- read_csv("https://bit.ly/03-data-acadia")
 
@@ -30,6 +40,9 @@ visit_16 <- read_csv("https://bit.ly/03-data-visit-16")
 # All Nationally designated sites in Massachusetts
 mass <- read_csv("https://bit.ly/03-data-mass")
 ```
+
+
+
 
 
 
