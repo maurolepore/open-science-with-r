@@ -1,0 +1,45 @@
+---
+title: "Visualization"
+output: html_document
+---
+
+## Setup
+
+The first chunk in an R Notebook is usually titled "setup," and by convention includes the R packages you want to load. Remember, in order to use an R package you have to run some `library()` code every session. Execute these lines of code to load the packages. 
+
+```{r setup}
+# install.packages("tidyverse")
+library(tidyverse)
+```
+
+## Datasets
+
+```{r}
+# National Parks in California
+ca <- read_csv("https://bit.ly/03-data-ca")
+
+# Acadia National Park
+acadia <- read_csv("https://bit.ly/03-data-acadia")
+
+# Southeast US National Parks
+se <- read_csv("https://bit.ly/03-data-se")
+
+# 2016 Visitation for all Pacific West National Parks
+visit_16 <- read_csv("https://bit.ly/03-data-visit-16")
+
+# All Nationally designated sites in Massachusetts
+mass <- read_csv("https://bit.ly/03-data-mass")
+```
+
+
+
+***
+
+# Take aways
+
+You can use this code template to make thousands of graphs with **ggplot2**.
+
+```{r eval = FALSE}
+ggplot(data = <DATA>) +
+  <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
+```
