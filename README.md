@@ -1,2 +1,4 @@
 # 2020-05-12-open-science-with-r
-Live code for https://maurolepore.github.io/2020-05-12-rice/
+
+* Lesson: https://maurolepore.github.io/2020-05-12-rice/
+* Repo: maurolepore/2020-05-12-open-science-with-r
