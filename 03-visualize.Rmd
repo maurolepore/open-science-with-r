@@ -14,35 +14,91 @@ The first chunk in an R Notebook is usually titled "setup," and by convention in
 library(tidyverse)
 ```
 
-## Datasets
+## Data
 
-## Your turn 1
-
-Type and run this code to load one dataset. Pay strict attention to spelling, capitalization, and parentheses!
+- Create the dataset `ca`, by reading with the .csv data of National Parks in California at "https://bit.ly/03-data-ca", with the function `read_csv()`.
 
 ```{r}
-# National Parks in California
 ca <- read_csv("https://bit.ly/03-data-ca")
 ```
 
-Load the remaining datasets.
+- Type `ca` to preview the data. You may also use `head()` or `View()`.
 
 ```{r}
-# Acadia National Park
-acadia <- read_csv("https://bit.ly/03-data-acadia")
-
-# Southeast US National Parks
-se <- read_csv("https://bit.ly/03-data-se")
-
-# 2016 Visitation for all Pacific West National Parks
-visit_16 <- read_csv("https://bit.ly/03-data-visit-16")
-
-# All Nationally designated sites in Massachusetts
-mass <- read_csv("https://bit.ly/03-data-mass")
+ca
 ```
 
+## Consider
+
+* What relationship do you expect to see between year and the number of visitors to national parks in California, say since early 1900?
+
+* This code uses the data `ca` and represents with points the values of the variables `year` and `visitors`.
+
+```{r}
+ggplot(data = ca) +
+  geom_point(mapping = aes(x = year, y = visitors))
+```
+
+- Now map the values of the variable `park_name` to the `color` aesthetics.
+
+```{r}
+ggplot(data = ca) +
+  geom_point(mapping = aes(x = year, y = visitors, color = park_name))
+```
+
+## Set vs map
+
+* Set the colour of all points to blue.
+
+```{r}
+ggplot(data = ca) +
+  geom_point(mapping = aes(x = year, y = visitors), color = "blue")
+```
+
+- What is wrong in this code?
+
+```{r}
+ggplot(data = ca) +
+  geom_point(mapping = aes(x = year, y = visitors, color = "blue"))
+```
+
+## Facet
+
+* Add `facet_wrap(~ park_name)` to facet (split) the data by `park_name`. The plot is now clear evern without colour.
+
+(I'll ommit the name of the first arguments. They are optional.)
+
+```{r}
+ggplot(ca) +
+  geom_point(aes(x = year, y = visitors)) +
+  facet_wrap(~ park_name)
+```
+
+## Geoms
+
+* Instead of representing you data with points, we now use a smooth mean of the data.
+
+```{r}
+ggplot(ca) +
+  geom_smooth(aes(x = year, y = visitors)) 
+```
+
+- Use `geom_line()` and `color = park_name` to compare each park against the overall trend.
+
+```{r}
+ggplot(ca) +
+  geom_line(aes(x = year, y = visitors, color = park_name)) +
+  geom_smooth(aes(x = year, y = visitors)) 
+```
+
+```{r}
+
+```
+
+## Arranging and exporting plots
 
 
+## Leftovers
 
 
 
