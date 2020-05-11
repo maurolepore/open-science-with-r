@@ -76,12 +76,15 @@ ggplot(ca) +
 
 ## Geoms
 
+
 * Instead of representing you data with points, we now use a smooth mean of the data.
 
 ```{r}
 ggplot(ca) +
   geom_smooth(aes(x = year, y = visitors)) 
 ```
+
+(Smoothers fit a model to your data and then plot predictions from the model.)
 
 - Use `geom_line()` and `color = park_name` to compare each park against the overall trend.
 
@@ -91,9 +94,14 @@ ggplot(ca) +
   geom_smooth(aes(x = year, y = visitors)) 
 ```
 
-```{r}
+* Use `geom_bar()` to create a bar chart  FIXME
 
+```{r}
+ggplot(ca) +
+  geom_bar(aes(x = park_name))
 ```
+
+(Bar charts, histograms, and frequency polygons bin your data and then plot bin counts, the number of points that fall in each bin.)
 
 ## Arranging and exporting plots
 
