@@ -21,41 +21,129 @@ The setup chunk always runs before anything else.
 library(tidyverse)
 ```
 
-## Datasets
+## Data
 
 Copy-paste.
 
 ```{r}
+# National Parks in California
 ca <- read_csv("https://bit.ly/03-data-ca")
+# Acadia National Park
 acadia <- read_csv("https://bit.ly/03-data-acadia")
+# Southeast US National Parks
 se <- read_csv("https://bit.ly/03-data-se")
+# 2016 Visitation for all Pacific West National Parks
 visit_16 <- read_csv("https://bit.ly/03-data-visit-16")
+# All Nationally designated sites in Massachusetts
 mass <- read_csv("https://bit.ly/03-data-mass")
 ```
 
-- Type `ca` to preview the data. You may also use `head()` or `View()`.
+Preview the data with `View()` and `head()`.
 
 ```{r}
-ca
+head(ca)
 ```
 
-## Consider
+## Build
 
-* What relationship do you expect to see between year and the number of visitors to national parks in California, say since early 1900?
-
-* This code uses the data `ca` and represents with points the values of the variables `year` and `visitors`.
+* Adapt the first example. Plot the data ca, with year on x and visitors on y.
+* What relationship do you expect to see between year and the number of visitors?
 
 ```{r}
-ggplot(data = ca) +
-  geom_point(mapping = aes(x = year, y = visitors))
+ggplot(data = ca, aes(x = year, y = visitors)) +
+  geom_point()
 ```
 
-- Now map the values of the variable `park_name` to the `color` aesthetics.
+* Now map the values of the variable `park_name` to the `color` aesthetics.
 
 ```{r}
-ggplot(data = ca) +
-  geom_point(mapping = aes(x = year, y = visitors, color = park_name))
+ggplot(ca, aes(year, visitors, color = park_name)) +
+  geom_point()
 ```
+
+## Customizing
+
+* https://ggplot2.tidyverse.org/reference/index.html#section-scales
+* https://ggplot2.tidyverse.org/reference/index.html#section-themes
+
+```{r}
+ggplot(ca, aes(year, visitors, color = park_name)) +
+  geom_point() +
+  labs(title = "Acadia National Park Visitation", y = "Visitation", x = "Year") +
+  theme_bw()
+```
+
+## Faceting
+
+Now using data from Southeast US National Parks.
+
+```{r}
+ggplot(se, aes(year, visitors)) +
+  geom_point() +
+  facet_wrap(~ state)
+```
+
+## Geoms
+
+data = se
+
+Why is this a poor plot? What kind of variable is `park_name`?
+
+```{r}
+ggplot(data = se, aes(x = park_name, y = visitors)) + 
+  geom_point()
+```
+
+* Create a jitter plot.
+
+```{r}
+ggplot(se, aes(park_name, visitors)) + 
+  geom_jitter()
+```
+
+* Create a boxplot.
+
+```{r}
+ggplot(se, aes(x = park_name, y = visitors)) + 
+  geom_boxplot()
+```
+
+data = acadia
+
+* Create a scatter plot
+* Add lines
+* Add a smoothed mean
+* Move the smoothed mean to become the second layer. What subtle thing happened?
+
+```{r}
+ggplot(acadia,aes(x = year, y = visitors)) + 
+  geom_point() +
+  geom_line() +
+  geom_smooth()
+```
+
+data = visit_16
+
+* Create a bar chart. 
+* Where does the variable count come from?
+
+```{r}
+ggplot(visit_16, aes(state)) + 
+  geom_bar()
+```
+
+```{r}
+ggplot(visit_16, aes(state, visitors, fill = park_name)) + 
+  geom_bar(stat = "identity", position = "dodge")
+  geom_bar(stat = "identity", position = "dodge")
+```
+
+
+
+
+
+
+
 
 ## Set vs map
 
