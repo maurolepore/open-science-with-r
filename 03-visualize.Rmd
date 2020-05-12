@@ -3,6 +3,8 @@ title: "Visualization"
 output: github_document
 ---
 
+<https://github.com/maurolepore/2020-05-12-open-science-with-r>
+
 ## Setup
 
 The setup chunk always runs before anything else.
@@ -94,8 +96,7 @@ ______(data = __, aes(x = ____, y = visitors)) +
 
 
 
-* Now map the values of the variable `park_name` to the `color` aesthetics.
-
+* Map the values of the variable `park_name` to the `color` aesthetics.
 
 ```{r}
 ggplot(ca, aes(year, visitors, _____ = _________)) +
@@ -105,30 +106,49 @@ ggplot(ca, aes(year, visitors, _____ = _________)) +
 Bored?
 
 * I avoided `data =`, `x =`, and `y =` but used `colour` explicitely. Why?
-* The call to `aes()` can go inside `geom_point()`. When would you do it or not?
+* When is it a good idea to put `aes()` inside `ggplot()`?
+* When is it a good idea to put `aes()` inside `geom_*()`?
+
 
 
 ## Customizing
 
-* https://ggplot2.tidyverse.org/reference/index.html#section-scales
-* https://ggplot2.tidyverse.org/reference/index.html#section-themes
+Customize this plot:
+
+* Add a call to `labs()` to create these labels:
+  * title = "Acadia National Park Visitation".
+  * y = "Visitation".
+  * x = "Year".
+* Add a call to `theme_bw()` to change the theme to black and white.
 
 ```{r}
 ggplot(ca, aes(year, visitors, color = park_name)) +
-  geom_point() +
-  labs(title = "Acadia National Park Visitation", y = "Visitation", x = "Year") +
-  theme_bw()
+  geom_point()
 ```
+
+Bored?
+
+* There are specific functions for x, y, and title labels. Find them.
+* Find and try other themes.
 
 ## Faceting
 
-Now using data from Southeast US National Parks.
+data = se (Southeast US National Parks)
+
+* Scatter-plot `visitors` (y) by `year` (x) for the `se` dataset.
+* Add `facet_wrap(~ state)` to create a panel for each state.
 
 ```{r}
-ggplot(se, aes(year, visitors)) +
-  geom_point() +
-  facet_wrap(~ state)
+______(se, aes(____, ________)) +
+  __________()
 ```
+
+Bored?
+
+* What does the `scales` argument do?
+* Find another `face_*()` function.
+
+
 
 ## Geoms
 
