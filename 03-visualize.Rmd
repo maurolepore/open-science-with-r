@@ -116,7 +116,7 @@ data = acadia
 * Move the smoothed mean to become the second layer. What subtle thing happened?
 
 ```{r}
-ggplot(acadia,aes(x = year, y = visitors)) + 
+ggplot(acadia, aes(year, visitors)) + 
   geom_point() +
   geom_line() +
   geom_smooth()
@@ -124,7 +124,7 @@ ggplot(acadia,aes(x = year, y = visitors)) +
 
 data = visit_16
 
-* Create a bar chart. 
+* Create a bar chart. Count instances of `state`.
 * Where does the variable count come from?
 
 ```{r}
@@ -132,18 +132,19 @@ ggplot(visit_16, aes(state)) +
   geom_bar()
 ```
 
+* Create a barchart of the number of visitors per state.
+* Map the bar fill (colour) to `park_name`.
+* Dodge the bars to allow side by side comparison.
+
 ```{r}
 ggplot(visit_16, aes(state, visitors, fill = park_name)) + 
-  geom_bar(stat = "identity", position = "dodge")
-  geom_bar(stat = "identity", position = "dodge")
+  geom_col(position = "dodge")
 ```
 
 
 
 
-
-
-
+## Leftovers
 
 ## Set vs map
 
@@ -205,7 +206,6 @@ ggplot(ca) +
 ## Arranging and exporting plots
 
 
-## Leftovers
 
 
 
