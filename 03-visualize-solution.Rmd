@@ -13,7 +13,7 @@ The setup chunk always runs before anything else.
 
 ```{r setup}
 # install.packages("tidyverse")
-_______(tidyverse)
+library(tidyverse)
 ```
 
 Bored? 
@@ -29,8 +29,10 @@ Bored?
 * Plot what you see in Usage.
 
 ```{r}
+library(ggplot2)
 
-
+ggplot(mpg, aes(displ, hwy, colour = class)) +
+  geom_point()
 ```
 
 
@@ -41,7 +43,7 @@ Bored?
 
 ```{r}
 # National Parks in California
-ca <- read____("_________________________")
+ca <- readr::read_csv("https://bit.ly/03-data-ca")
 ```
 
 Bored?
@@ -69,7 +71,7 @@ mass <- read_csv("https://bit.ly/03-data-mass")
 Preview the data with `head()`.
 
 ```{r}
-
+head(ca)
 ```
 
 Bored?
@@ -90,8 +92,8 @@ Bored?
 # ggplot(data = mpg, aes(x = displ, y = hwy, colour = class)) +
 #   geom_point()
 
-______(data = __, aes(x = ____, y = visitors)) +
-  geom______()
+ggplot(data = ca, aes(x = year, y = visitors)) +
+  geom_point()
 ```
 
 
@@ -99,7 +101,7 @@ ______(data = __, aes(x = ____, y = visitors)) +
 * Map the values of the variable `park_name` to the `color` aesthetics.
 
 ```{r}
-ggplot(ca, aes(year, visitors, _____ = _________)) +
+ggplot(ca, aes(year, visitors, color = park_name)) +
   geom_point()
 ```
 
@@ -141,8 +143,9 @@ data = se (Southeast US National Parks)
 * Add `facet_wrap(~ state)` to create a panel for each state.
 
 ```{r}
-______(se, aes(____, ________)) +
-  __________()
+ggplot(se, aes(year, visitors)) +
+  geom_point() +
+  facet_wrap(~ state)
 ```
 
 Bored?
@@ -175,8 +178,8 @@ p +
 * Is this a bit better?
 
 ```{r}
-_ + 
-  __________(_____ = 0.25) +
+p + 
+  geom_point(alpha = 0.25) +
   coord_flip()
 ```
 
@@ -186,7 +189,7 @@ _ +
 * Reorder the code so it runs correctly.
 
 ```{r}
-geom_jitter() + p + coord_flip()
+p + coord_flip() + geom_jitter()
 ```
 
 
@@ -194,7 +197,7 @@ geom_jitter() + p + coord_flip()
 * Create a boxplot.
 
 ```{r}
-_ + geom________() + ______flip()
+p + geom_boxplot() + coord_flip()
 ```
 
 
@@ -209,9 +212,9 @@ data = acadia
 
 ```{r}
 ggplot(acadia, aes(year, visitors)) + 
-  geom______() +
-  _____line() +
-  _____smooth()
+  geom_point() +
+  geom_line() +
+  geom_smooth()
 ```
 
 Bored?
@@ -227,8 +230,8 @@ data = visit_16
 * Create a columns bar chart where the height of the columns represent `visitors` (y) per `state` (x).
 
 ```{r}
-ggplot(visit_16, ___(state, ________)) + 
-  _____col()
+ggplot(visit_16, aes(state, visitors)) + 
+  geom_col()
 ```
 
 
@@ -236,9 +239,8 @@ ggplot(visit_16, ___(state, ________)) +
 * Map the bar fill to `park_name`.
 
 ```{r}
-q <- ggplot(visit_16, aes(_____, visitors, ____ = _________)) + 
-  ________()
-q
+q <- ggplot(visit_16, aes(state, visitors, fill = park_name))
+q + geom_col()
 ```
 
 
@@ -248,7 +250,8 @@ q
 * Now dodge the position of the bars to compare them side by side.
 
 ```{r}
-my_plot <- q + geom_col(________ = "dodge")
+my_plot <- q + geom_col(position = "dodge")
+my_plot
 ```
 
 
@@ -260,7 +263,7 @@ data = mass
 * Export `my_plot` with `ggsave()`.
 
 ```{r}
-______(filename = "03-my_plot.pdf", plot = _______)
+ggsave(filename = "03-my_plot.pdf", plot = my_plot)
 ```
 
 Bored?
@@ -274,8 +277,10 @@ Bored?
 * Make `my_plot` interactive with the function `ggplotly()` of the package plotly .
 
 ```{r}
-_______(plotly)
-________(my_plot)
+if (interactive()) {
+  library(plotly)
+  ggplotly(my_plot)
+}
 ```
 
 
