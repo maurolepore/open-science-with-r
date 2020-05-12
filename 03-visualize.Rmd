@@ -1,0 +1,296 @@
+---
+title: "Visualization"
+output: github_document
+---
+
+<https://github.com/maurolepore/2020-05-12-open-science-with-r>
+
+## Setup
+
+The setup chunk always runs before anything else.
+
+* Use tidyverse package.
+
+```{r setup}
+# install.packages("tidyverse")
+_______(tidyverse)
+```
+
+Bored? 
+
+* Why did I comment the the call to "install.packages()"? 
+* Hint: Is it polite to force-install software in someone else's computer?
+
+
+
+## Warm up
+
+* Explore https://ggplot2.tidyverse.org/
+* Plot what you see in Usage.
+
+```{r}
+
+```
+
+
+
+## Data
+
+* Read the .csv file at <https://bit.ly/03-data-ca>
+
+```{r}
+# National Parks in California
+ca <- readr::read____("_________________________")
+```
+
+Bored?
+
+* How would you write `ca` to the file "data/03-data-ca.csv"?
+* How would you re-read it from "data/03-data-ca.csv"?
+
+
+
+Copy-paste from the code to read all other files.
+
+```{r}
+# Acadia National Park
+acadia <- read_csv("https://bit.ly/03-data-acadia")
+# Southeast US National Parks
+se <- read_csv("https://bit.ly/03-data-se")
+# 2016 Visitation for all Pacific West National Parks
+visit_16 <- read_csv("https://bit.ly/03-data-visit-16")
+# All Nationally designated sites in Massachusetts
+mass <- read_csv("https://bit.ly/03-data-mass")
+```
+
+
+
+Preview the data with `head()`.
+
+```{r}
+
+```
+
+Bored?
+
+* Try also: running just `ca`, `glimpse()`, `View()`.
+* Compare `as_tibble(ca)` with `as.data.frame(ca)`.
+
+
+
+
+## Build
+
+* What relationship do you expect to see between year and the number of visitors?
+* Plot the data `ca`. Put `year` on x and `visitors` on y.
+
+```{r}
+# Example from https://ggplot2.tidyverse.org/
+# ggplot(data = mpg, aes(x = displ, y = hwy, colour = class)) +
+#   geom_point()
+
+______(data = __, aes(x = ____, y = ________)) +
+  __________()
+```
+
+
+
+* Map the values of the variable `park_name` to the `color` aesthetics.
+
+```{r}
+ggplot(ca, aes(year, visitors, _____ = _________)) +
+  geom_point()
+```
+
+Bored?
+
+* I avoided `data =`, `x =`, and `y =` but used `colour` explicitly. Why?
+* When is it a good idea to put `aes()` inside `ggplot()`?
+* When is it a good idea to put `aes()` inside `geom_*()`?
+
+
+
+## Customizing
+
+Customize this plot:
+
+* Add a call to `labs()` to create these labels:
+  * title = "Acadia National Park Visitation".
+  * y = "Visitation".
+  * x = "Year".
+* Add a call to `theme_bw()` to change the theme to black and white.
+
+```{r}
+ggplot(ca, aes(year, visitors, color = park_name)) +
+  geom_point() +
+
+
+```
+
+Bored?
+
+* There are specific functions for x, y, and title labels. Find them.
+* Find and try other themes.
+
+
+
+## Faceting
+
+data = se (Southeast US National Parks)
+
+* Scatter-plot `visitors` (y) by `year` (x) for the `se` dataset.
+* Add `facet_wrap(~ state)` to create a panel for each state.
+
+```{r}
+ggplot(se, aes(year, visitors)) +
+  geom______() +
+  __________(~ _____)
+```
+
+Bored?
+
+* What does the `scales` argument do?
+* Find another `face_*()` function.
+
+
+
+## Geoms
+
+### Discrete x
+
+data = se
+
+You can assign to a new variable part(s) of a ggplot and reuse them later.
+
+* Why is this a poor plot?
+
+```{r}
+p <- ggplot(se, aes(park_name, visitors))
+p + 
+  geom_point()
+```
+
+
+
+* Change the opacity of the points with `alpha = 0.25`.
+* Here I also flip the coordinate system with `coord_flip()`
+* Is this a bit better?
+
+```{r}
+p + 
+  geom_point(_____ = ____) +
+  coord_flip()
+```
+
+
+
+* Here I use `geom_jitter()` instead of `geom_point()`.
+* Reorder the code so it runs correctly.
+
+```{r}
+coord_flip() + p + geom_jitter()
+```
+
+
+
+* Create a boxplot.
+
+```{r}
+_ + geom________() + coord_flip()
+```
+
+
+
+### Time series
+
+data = acadia
+
+* Create a scatter plot
+* Add lines
+* Add a smoothed mean
+
+```{r}
+ggplot(acadia, aes(year, visitors)) + 
+  geom______() +
+  geom_____() +
+  geom_______()
+```
+
+Bored?
+
+* Move the smoothed mean to become the second layer. What subtle thing happened?
+
+
+
+### Bar charts
+
+data = visit_16
+
+* Create a columns bar chart where the height of the columns represent `visitors` (y) per `state` (x).
+
+```{r}
+ggplot(visit_16, aes(state, visitors)) + 
+  geom____()
+```
+
+
+
+* Map the bar fill to `park_name`.
+
+```{r}
+q <- ggplot(visit_16, aes(state, visitors, ____ = _________))
+q + geom_col()
+```
+
+
+
+### Position adjustments
+
+* Now dodge the position of the bars to compare them side by side.
+
+```{r}
+my_plot <- q + geom_col(________ = "_____")
+my_plot
+```
+
+
+
+## Arranging and exporting plots
+
+data = mass
+
+* Export `my_plot` with `ggsave()`.
+
+```{r}
+______(filename = "03-my_plot.pdf", plot = _______)
+```
+
+Bored?
+
+* Try to export a pdf with RStudio's Viewer panel.
+
+
+
+### ggplotly
+
+* Make `my_plot` interactive with the function `ggplotly()` of the package plotly .
+
+```{r}
+if (interactive()) {
+  library(plotly)
+  ggplotly(my_plot)
+}
+```
+
+
+
+***
+
+# Take aways
+
+You can use this code template to make thousands of graphs with **ggplot2**.
+
+```{r eval = FALSE}
+ggplot(data = <DATA>) +
+  <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
+```
