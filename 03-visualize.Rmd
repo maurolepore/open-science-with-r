@@ -3,7 +3,7 @@ title: "Visualization"
 output: github_document
 ---
 
-<https://github.com/maurolepore/2020-05-12-open-science-with-r>
+<https://github.com/maurolepore/2020-05-12-open-science-with-r> 
 
 ## Setup
 
@@ -13,7 +13,7 @@ The setup chunk always runs before anything else.
 
 ```{r setup}
 # install.packages("tidyverse")
-_______(tidyverse)
+library(tidyverse)
 ```
 
 Bored? 
@@ -29,7 +29,10 @@ Bored?
 * Plot what you see in Usage.
 
 ```{r}
+library(ggplot2)
 
+ggplot(mpg, aes(displ, hwy, color = class)) + 
+  geom_point()
 ```
 
 
@@ -40,7 +43,7 @@ Bored?
 
 ```{r}
 # National Parks in California
-ca <- readr::read____("_________________________")
+ca <- readr::read_csv("https://bit.ly/03-data-ca")
 ```
 
 Bored?
@@ -68,7 +71,7 @@ mass <- read_csv("https://bit.ly/03-data-mass")
 Preview the data with `head()`.
 
 ```{r}
-
+head(ca)
 ```
 
 Bored?
@@ -89,8 +92,8 @@ Bored?
 # ggplot(data = mpg, aes(x = displ, y = hwy, colour = class)) +
 #   geom_point()
 
-______(data = __, aes(x = ____, y = ________)) +
-  __________()
+ggplot(data = ca, aes(x = year, y = visitors)) +
+  geom_point()
 ```
 
 
@@ -98,7 +101,7 @@ ______(data = __, aes(x = ____, y = ________)) +
 * Map the values of the variable `park_name` to the `color` aesthetics.
 
 ```{r}
-ggplot(ca, aes(year, visitors, _____ = _________)) +
+ggplot(ca, aes(year, visitors, color = park_name)) +
   geom_point()
 ```
 
@@ -123,8 +126,12 @@ Customize this plot:
 ```{r}
 ggplot(ca, aes(year, visitors, color = park_name)) +
   geom_point() +
-
-
+  labs(
+    title = "Acadia National Park Visitation", 
+    x = "Year", 
+    y = "Visitation"
+  ) +
+  theme_bw()
 ```
 
 Bored?
