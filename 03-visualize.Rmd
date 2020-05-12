@@ -105,7 +105,7 @@ ggplot(ca, aes(year, visitors, _____ = _________)) +
 
 Bored?
 
-* I avoided `data =`, `x =`, and `y =` but used `colour` explicitely. Why?
+* I avoided `data =`, `x =`, and `y =` but used `colour` explicitly. Why?
 * When is it a good idea to put `aes()` inside `ggplot()`?
 * When is it a good idea to put `aes()` inside `geom_*()`?
 
@@ -156,27 +156,46 @@ Bored?
 
 data = se
 
-* Create a scatterplot of `park_name` (x) versus `visitors` (y).
-* Is this a good plot?
+You can assign to a new variable part(s) of a ggplot and reuse them later.
+
+* Why is this a poor plot?
 
 ```{r}
-ggplot(data = se, aes(x = park_name, y = visitors)) + 
+p <- ggplot(se, aes(park_name, visitors))
+p + 
   geom_point()
 ```
 
-* Create a jitter plot.
+
+
+* Change the opacity of the points with `alpha = 0.25`.
+* Here I also flip the coordinate system with `coord_flip()`
+* Is this a bit better?
 
 ```{r}
-ggplot(se, aes(park_name, visitors)) + 
-  geom_jitter()
+_ + 
+  __________(_____ = 0.25) +
+  coord_flip()
 ```
+
+
+
+* Here I use `geom_jitter()` instead of `geom_point()`.
+* Reorder the code so it runs correctly.
+
+```{r}
+geom_jitter() + p + coord_flip()
+```
+
+
 
 * Create a boxplot.
 
 ```{r}
-ggplot(se, aes(x = park_name, y = visitors)) + 
-  geom_boxplot()
+_ + geom________() + ______flip()
 ```
+
+
 
 ### Time series
 
@@ -185,69 +204,74 @@ data = acadia
 * Create a scatter plot
 * Add lines
 * Add a smoothed mean
-* Move the smoothed mean to become the second layer. What subtle thing happened?
 
 ```{r}
 ggplot(acadia, aes(year, visitors)) + 
-  geom_point() +
-  geom_line() +
-  geom_smooth()
+  geom______() +
+  _____line() +
+  _____smooth()
 ```
+
+Bored?
+
+* Move the smoothed mean to become the second layer. What subtle thing happened?
+
+
 
 ### Bar charts
 
 data = visit_16
 
-* Create a columns bar chart where the height of the columns represent `visotors` (y) per `state` (x).
+* Create a columns bar chart where the height of the columns represent `visitors` (y) per `state` (x).
 
 ```{r}
-ggplot(visit_16, aes(state, visitors)) + 
-  geom_col()
+ggplot(visit_16, ___(state, ________)) + 
+  _____col()
 ```
 
-* Map the bar fill (color) to `park_name`.
+
+
+* Map the bar fill to `park_name`.
 
 ```{r}
-ggplot(visit_16, aes(state, visitors, fill = park_name)) + 
-  geom_col()
+q <- ggplot(visit_16, aes(_____, visitors, ____ = _________)) + 
+  ________()
+q
 ```
+
+
 
 ### Position adjustments
 
 * Now dodge the position of the bars to compare them side by side.
 
 ```{r}
-ggplot(visit_16, aes(state, visitors, fill = park_name)) + 
-  geom_col(position = "dodge")
+my_plot <- q + geom_col(________ = "dodge")
 ```
 
-* Dodge the bars to allow side by side comparison.
 
-```{r}
-ggplot(visit_16, aes(state, visitors, fill = park_name)) + 
-  geom_col(position = "dodge")
-```
 
 ## Arranging and exporting plots
 
 data = mass
 
-* Export the last plot with RStudio and `ggsave()`.
+* Export `my_plot` with `ggsave()`.
 
 ```{r}
-my_plot <- ggplot(visit_16, aes(state, visitors, fill = park_name)) + 
-  geom_col(position = "dodge")
-
-ggsave(filename = "03-my_plot.pdf", my_plot)
+______(filename = "03-my_plot.pdf", plot = _______)
 ```
+
+Bored?
+
+* Try to export a pdf with RStudio's Viewer panel.
 
 ### ggplotly
 
-* Make your previous plot interactive with the function `ggplotly()` of the package plotly .
+* Make `my_plot` interactive with the function `ggplotly()` of the package plotly .
 
 ```{r}
-library(plotly)
-ggplotly(my_plot)
+_______(plotly)
+________(my_plot)
 ```
 
 
