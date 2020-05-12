@@ -124,16 +124,27 @@ ggplot(acadia, aes(year, visitors)) +
 
 data = visit_16
 
-* Create a bar chart. Count instances of `state`.
-* Where does the variable count come from?
+* Create a columns bar chart where the height of the columns represent `visotors` (y) per `state` (x).
 
 ```{r}
-ggplot(visit_16, aes(state)) + 
-  geom_bar()
+ggplot(visit_16, aes(state, visitors)) + 
+  geom_col()
 ```
 
-* Create a barchart of the number of visitors per state.
 * Map the bar fill (colour) to `park_name`.
+
+```{r}
+ggplot(visit_16, aes(state, visitors, fill = park_name)) + 
+  geom_col()
+```
+
+* Now dodge the position of the bars to compare them side by side.
+
+```{r}
+ggplot(visit_16, aes(state, visitors, fill = park_name)) + 
+  geom_col(position = "dodge")
+```
+
 * Dodge the bars to allow side by side comparison.
 
 ```{r}
