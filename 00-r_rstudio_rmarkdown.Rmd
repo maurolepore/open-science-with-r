@@ -204,11 +204,27 @@ and execute reproducible research.
 ### Exercise
 Try clicking the `Knit` button at the top of the page, and see what happens. 
 
+## Clearing your History
+As you've made your way through this document, RStudio will now be cluttered 
+with various objects. For the sake of reproducibility, it is always good to 
+remove all objects (and prove that you can get back to the same result from 
+scratch). 
+
+This can be done by clicking: 
+`Session -> Clear Workspace...`
+or in R by executing: 
+```{r}
+# to remove one object
+rm(x)
+
+# to remove all objects
+rm(list = ls())
+```
+
 # Take aways
 R, RStudio and RMarkdown are three powerful tools that can help you conduct 
 reproducible research:
 * R is the engine, which comes out of the box with useful functions, "base R"
 * RStudio is the car, providing a powerful interface for interacting with R
-* RMarkdown doesn't fit will with this analogy, but is useful for documenting 
-your research, and proving others can reach the same results given the same 
-input
+* RMarkdown is a map, it is useful for documenting how you got to where you are, 
+and showing others how to get there
