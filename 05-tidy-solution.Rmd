@@ -25,39 +25,27 @@ relig_income %>%
   pivot_longer(-religion, names_to = "income", values_to = "count")
 ```
 
-Explore the data, the article's section, and the code. Think:
+Look and the data and code.
 
 * Why is the input messy and the output tidy?
-* What does each argument do?
+* Guess what each argument does.
 
 
 
 ## Data
 
-* Get the data.
+* Read a messy dataset.
 
 ```{r}
-## wide messy format
 gap_wide <- readr::read_csv('https://raw.githubusercontent.com/carpentries-incubator/open-science-with-r/gh-pages/data/gapminder_wide.csv')
-
-## long tidy format
-gapminder <- readr::read_csv('https://raw.githubusercontent.com/carpentries-incubator/open-science-with-r/gh-pages/data/gapminder.csv')
 ```
 
-Bored?
-
-* Create a new folder called "data"
-* Download the data to your computer
-* Upload it to rstudio.cloud into "data"
-* Replace the URLs with paths to each file in your project.
 
 
-
-Have a look at each dataset.
+Have a look the dataset.
 
 ```{r}
 gap_wide
-gapminder
 ```
 
 Bored?
