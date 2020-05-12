@@ -1,8 +1,8 @@
 ---
 title: "Tidy"
 output:
-  pdf_document: default
   github_document: default
+  pdf_document: default
 ---
 
 ## Setup
@@ -112,14 +112,17 @@ tidy <- gw1 %>% separate(col = name, into = c("metric", "year"))
 tidy
 ```
 
-* Celebrate! With such a tidy dataset you are now ready to understand your data and communicate your work.
-* Use the readr package to write your `tidy` dataset in "data/tidy.csv".
-* You'll need to create the folder "data".
+
+
+* Use `unite()` and `pivot_wider()` to mess things up again.
 
 ```{r}
-if (!dir.exists("data")) {
-  dir.create("data")
-}
+messy <- tidy %>% 
+  unite("name", metric, year) %>% 
+  pivot_wider()
 
-tidy %>% write_csv(path = "data/tidy.csv")
+messy
+
+gap_wide
 ```
+
