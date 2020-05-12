@@ -131,6 +131,8 @@ Bored?
 * There are specific functions for x, y, and title labels. Find them.
 * Find and try other themes.
 
+
+
 ## Faceting
 
 data = se (Southeast US National Parks)
@@ -264,6 +266,8 @@ ______(filename = "03-my_plot.pdf", plot = _______)
 Bored?
 
 * Try to export a pdf with RStudio's Viewer panel.
+
+
 
 ### ggplotly
 
