@@ -224,6 +224,7 @@ rm(list = ls())
 # Take aways
 R, RStudio and RMarkdown are three powerful tools that can help you conduct 
 reproducible research:
+
 * R is the engine, which comes out of the box with useful functions, "base R"
 * RStudio is the car, providing a powerful interface for interacting with R
 * RMarkdown is a map, it is useful for documenting how you got to where you are, 
