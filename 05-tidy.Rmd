@@ -1,0 +1,129 @@
+---
+title: "Tidy"
+output:
+  github_document: default
+  pdf_document: default
+---
+
+## Setup
+
+```{r setup}
+_______(tidyverse)
+```
+
+
+
+## Warm up
+
+Packages in the tidyverse include articles that explain how to use them. 
+
+* Go to this specific of one tidyr's article. <https://tidyr.tidyverse.org/articles/pivot.html#pew>.
+* Type the two lines of code you see in the second chunk.
+
+```{r}
+
+
+```
+
+Look and the data and code.
+
+* Why is the input messy and the output tidy?
+* Guess what each argument does.
+
+
+
+## Data
+
+* Read a messy dataset.
+
+```{r}
+gap_wide <- readr::________('https://raw.githubusercontent.com/carpentries-incubator/open-science-with-r/gh-pages/data/gapminder_wide.csv')
+```
+
+
+
+Have a look the dataset.
+
+```{r}
+
+```
+
+Bored?
+
+* You know `head()` helps you see the first few rows. Which function helps you see the last few rows?
+* Try `str()`. 
+* Tweak `str()` with the arguments `list.len`, and `give.attr`
+
+
+
+* From `gap_wide` select `country`, `continent` and columns starting with "gdp".
+
+```{r}
+________ %>%
+  ______(1, 2, starts_with("___"))
+```
+
+
+
+* Extend the previous pipeline.
+* Pivot the dataset on the columns starting with "gdp" (the output is longer).
+
+```{r}
+________ %>% 
+  ________________________________ %>%
+  pivot_longer(cols = starts_with("___"))
+```
+
+Bored?
+
+* Use arguments to get column names more informative than "name" and "value".
+
+
+
+* Why is this longer?
+
+```{r}
+gw1 <- gap_wide %>% 
+  pivot_longer(
+    cols = starts_with("gdp") | starts_with("life") | starts_with("pop")
+  )
+gw1
+```
+
+
+
+* These alternatives are identical but shorter. How do they work?
+
+```{r}
+gw2 <- gap_wide %>% pivot_longer(cols = -continent:-country)
+identical(gw1, gw2)
+
+gw3 <- gap_wide %>% pivot_longer(cols = -1:-2)
+identical(gw1, gw3)
+```
+
+
+
+`gw1` is still messy. Why?
+
+* Tidy the dataset `gw1` using `separate()` and the vector c("metric", "year").
+
+```{r}
+tidy <- gw1 %>% ________(col = name, into = c("______", "____"))
+tidy
+```
+
+
+
+* Use `unite()` and `pivot_wider()` to mess things up again.
+
+```{r}
+messy <- tidy %>% 
+  _____("name", metric, year) %>% 
+  ___________()
+
+messy
+
+gap_wide
+```
+
