@@ -7,27 +7,51 @@ output: github_document
 
 The setup chunk always runs before anything else.
 
+* Use tidyverse package.
+
 ```{r setup}
 # install.packages("tidyverse")
-library(tidyverse)
+_______(tidyverse)
 ```
+
+Bored? 
+
+* Why did I comment the the call to "install.packages()"? 
+* Hint: Is it polite to force-install software in someone else's computer?
+
+
 
 ## Warm up
 
-Explore https://ggplot2.tidyverse.org/ and plot what you see in Usage.
+* Explore https://ggplot2.tidyverse.org/
+* Plot what you see in Usage.
 
 ```{r}
-ggplot(mpg, aes(displ, hwy, colour = class)) +
-  geom_point()
+
+
 ```
+
+
 
 ## Data
 
-Copy-paste.
+* Read the .csv file at <https://bit.ly/03-data-ca>
 
 ```{r}
 # National Parks in California
-ca <- read_csv("https://bit.ly/03-data-ca")
+ca <- read____("_________________________")
+```
+
+Bored?
+
+* How would you write `ca` to the file "data/03-data-ca.csv"?
+* How would you re-read it from "data/03-data-ca.csv"?
+
+
+
+Copy-paste from the code to read all other files.
+
+```{r}
 # Acadia National Park
 acadia <- read_csv("https://bit.ly/03-data-acadia")
 # Southeast US National Parks
@@ -38,28 +62,51 @@ visit_16 <- read_csv("https://bit.ly/03-data-visit-16")
 mass <- read_csv("https://bit.ly/03-data-mass")
 ```
 
-Preview the data with `View()` and `head()`.
+
+
+Preview the data with `head()`.
 
 ```{r}
-head(ca)
+
 ```
+
+Bored?
+
+* Try also: running just `ca`, `glimpse()`, `View()`.
+* Compare `as_tibble(ca)` with `as.data.frame(ca)`.
+
+
+
 
 ## Build
 
-* Adapt the first example. Plot the data ca, with year on x and visitors on y.
 * What relationship do you expect to see between year and the number of visitors?
+* Plot the data `ca`. Put `year` on x and `visitors` on y.
 
 ```{r}
-ggplot(data = ca, aes(x = year, y = visitors)) +
-  geom_point()
+# Example from https://ggplot2.tidyverse.org/
+# ggplot(data = mpg, aes(x = displ, y = hwy, colour = class)) +
+#   geom_point()
+
+______(data = __, aes(x = ____, y = visitors)) +
+  geom______()
 ```
+
+
 
 * Now map the values of the variable `park_name` to the `color` aesthetics.
 
+
 ```{r}
-ggplot(ca, aes(year, visitors, color = park_name)) +
+ggplot(ca, aes(year, visitors, _____ = _________)) +
   geom_point()
 ```
+
+Bored?
+
+* I avoided `data =`, `x =`, and `y =` but used `colour` explicitely. Why?
+* The call to `aes()` can go inside `geom_point()`. When would you do it or not?
+
 
 ## Customizing
 
