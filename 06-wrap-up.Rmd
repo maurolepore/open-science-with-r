@@ -1,0 +1,32 @@
+---
+title: "Wrap up"
+output: github_document
+---
+
+
+## Import
+
+* Read messy data from <https://raw.githubusercontent.com/carpentries-incubator/open-science-with-r/gh-pages/data/gapminder_wide.csv>.
+
+## Transform
+
+* Filter it to include data since 1980.
+* Remove the column `continent`.
+
+## Tidy
+
+* Pivot the data on everything except `country`.
+* Separate the messy column into `metric` and `year`.
+
+## Visualize
+
+Plot each metric through time:
+
+* map colour to country
+* facet by metric (free `scales`)
+
+## Communicate
+
+* Create a .pdf report.
+* Download it to your computer.
+
