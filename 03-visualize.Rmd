@@ -157,7 +157,7 @@ ggplot(se, aes(year, visitors)) +
 Bored?
 
 * What does the `scales` argument do?
-* Find another `face_*()` function.
+* Find another `facet_*()` function.
 
 
 
