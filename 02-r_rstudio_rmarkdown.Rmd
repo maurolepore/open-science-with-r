@@ -145,9 +145,9 @@ Your turn!
 
 Create a vector that contains the different weights of four fish (you pick the object name!):
 * one fish: 12 kg
-two fish: 34 kg
-red fish: 20 kg
-blue fish: 6.6 kg
+* two fish: 34 kg
+* red fish: 20 kg
+* blue fish: 6.6 kg
 
 Convert the vector of kilos to pounds (hint: 1 kg = 2.2 pounds).
 

@@ -104,7 +104,6 @@ these logical operators do:
 
 ```{r}
 a_number <- 12
-a_number
 
 # Try 
 # `==` means 'is equal to'
@@ -115,20 +114,20 @@ a_number != 10
 a_number != 12
 
 # `<` means 'is less than'
-a_number < 10
 a_number < 13
+a_number < 10
 
 # `>` means 'is greater than'
-a_number > 10
 a_number > 13
+a_number > 10
 
 # `<=` means 'is less than or equal to'
 a_number <= 13
-a_number <= 12
+a_number <= 10
 
 # `>=` means 'is greater than or equal to'
-a_number >= 11
-a_number >= 12
+a_number >= 13
+a_number >= 10
 
 ```
 
@@ -157,19 +156,9 @@ Create a vector that contains the different weights of four fish (you pick the o
 * red fish: 20 kg
 * blue fish: 6.6 kg
 
-```{r}
-fish_weights <- c(12, 34, 20, 6.6)
-```
-
 Convert the vector of kilos to pounds (hint: 1 kg = 2.2 pounds).
-```{r}
-fish_weights_lbs <- fish_weights * 2.2
-```
 
 Calculate the total weight. (hint: type `?sum` in the console)
-```{r}
-total_fish_weight <- sum(fish_weights)
-```
 
 ## Functions
 There are many ways to calculate the sum of the vector you made above. One of 
@@ -190,6 +179,20 @@ functions, and try to figure out what they do (I have done the first one for you
 # Hint, you can use the arrows above the help file viewer to scroll between each 
 # help file you've called. 
 ?min
+min(c(1,2,3,4,5))
+
+?max
+max(c(1,2,3,4,5))
+
+?mean
+mean(c(1,2,3,4,5))
+
+?log
+# note log defaults to the natural logarithm
+log(exp(1))
+
+# if you want log base 10 use `log10()`
+log10(10)
 ```
 
 ## Packages
@@ -205,6 +208,9 @@ by calling:
 You must then load the package into the current R session by calling:
 ```{r}
 library("praise")
+
+praise()
+
 ```
 
 Finally, you can look up the documentation for the package (tips on how to use 
