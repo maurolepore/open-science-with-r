@@ -6,7 +6,7 @@ output: github_document
 ## Setup https://www.tidyverse.org/
 
 ```{r setup}
-library(tidyverse)
+________(tidyverse)
 ```
 
 ## Import https://readr.tidyverse.org/
@@ -16,7 +16,7 @@ library(tidyverse)
 ```{r}
 url <- "https://raw.githubusercontent.com/carpentries-incubator/open-science-with-r/gh-pages/data/gapminder_wide.csv"
 
-messy <- readr::read_csv(url)
+messy <- _______________(url)
 messy
 ```
 
@@ -27,7 +27,7 @@ messy
 
 ```{r}
 tidy <- messy %>% 
-  pivot_longer(cols = -continent:-country) %>% 
+  ____________(cols = -continent:-country) %>% 
   # Watch out! year is a character vector, not a number
   separate(col = name, into = c("metric", "year"))
 
@@ -44,9 +44,9 @@ tidy
 
 ```{r}
 polished <- tidy %>% 
-  mutate(year = as.integer(year)) %>%
-  filter(year > 1980) %>% 
-  select(-country)
+  ______(year = as.integer(year)) %>%
+  ______(year > 1980) %>% 
+  ______(-country)
 
 polished
 ```
@@ -60,9 +60,9 @@ Plot a model for each metric through time:
 * Facet by `metric` (free the y variable -- see `scales`).
 
 ```{r}
-ggplot(polished, aes(year, value, fill = continent, color = continent)) +
-  geom_smooth() +
-  facet_wrap(~ metric, scales = "free_y")
+ggplot(polished, aes(year, value, ____ = continent, _____ = continent)) +
+  _____smooth() +
+  facet_wrap(~ ______, ______ = "free_y")
 ```
 
 
