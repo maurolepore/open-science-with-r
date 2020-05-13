@@ -103,24 +103,31 @@ I have filled in the first few answers, but try to figure out what all
 these logical operators do:
 
 ```{r}
-a_number
+a_number <- 12
 
 # Try 
 # `==` means 'is equal to'
 a_number == 12
 
-# `!=` means ...
+# `!=` means 'is not equal to'
 a_number != 10
 a_number != 12
 
-# `<` means ...
+# `<` means 'is less than'
+a_number < 13
 a_number < 10
 
-# `>` means ...
+# `>` means 'is greater than'
+a_number > 13
+a_number > 10
 
-# `<=` means ...
+# `<=` means 'is less than or equal to'
+a_number <= 13
+a_number <= 10
 
-# `=>` means ...
+# `>=` means 'is greater than or equal to'
+a_number >= 13
+a_number >= 10
 
 ```
 
@@ -172,6 +179,20 @@ functions, and try to figure out what they do (I have done the first one for you
 # Hint, you can use the arrows above the help file viewer to scroll between each 
 # help file you've called. 
 ?min
+min(c(1,2,3,4,5))
+
+?max
+max(c(1,2,3,4,5))
+
+?mean
+mean(c(1,2,3,4,5))
+
+?log
+# note log defaults to the natural logarithm
+log(exp(1))
+
+# if you want log base 10 use `log10()`
+log10(10)
 ```
 
 ## Packages
@@ -187,6 +208,9 @@ by calling:
 You must then load the package into the current R session by calling:
 ```{r}
 library("praise")
+
+praise()
+
 ```
 
 Finally, you can look up the documentation for the package (tips on how to use 
