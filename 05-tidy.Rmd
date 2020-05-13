@@ -1,8 +1,6 @@
 ---
 title: "Tidy"
-output:
-  github_document: default
-  pdf_document: default
+output: github_document
 ---
 
 ## Setup
