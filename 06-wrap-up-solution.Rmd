@@ -1,0 +1,73 @@
+---
+title: "Wrap up"
+output: github_document
+---
+
+## Setup https://www.tidyverse.org/
+
+```{r setup}
+library(tidyverse)
+```
+
+## Import https://readr.tidyverse.org/
+
+* Read messy data from <https://raw.githubusercontent.com/carpentries-incubator/open-science-with-r/gh-pages/data/gapminder_wide.csv>.
+
+```{r}
+url <- "https://raw.githubusercontent.com/carpentries-incubator/open-science-with-r/gh-pages/data/gapminder_wide.csv"
+
+messy <- readr::read_csv(url)
+messy
+```
+
+## Tidy https://tidyr.tidyverse.org/
+
+* Pivot the data on everything except `continent` and `country`.
+* Separate the messy column into `metric` and `year`.
+
+```{r}
+tidy <- messy %>% 
+  pivot_longer(cols = -continent:-country) %>% 
+  # Watch out! year is a character vector, not a number
+  separate(col = name, into = c("metric", "year"))
+
+tidy
+```
+
+
+
+## Transform https://dplyr.tidyverse.org/
+
+* Transform the year column from character to integer
+* Filter it to include data since 1980.
+* Select all columns except `country`.
+
+```{r}
+polished <- tidy %>% 
+  mutate(year = as.integer(year)) %>%
+  filter(year > 1980) %>% 
+  select(-country)
+
+polished
+```
+
+## Visualize https://ggplot2.tidyverse.org/
+
+Plot a model for each metric through time:
+
+* Map `color` and `fill` to `continent`.
+* Plot model with uncertainty around the mean.
+* Facet by `metric` (free the y variable -- see `scales`).
+
+```{r}
+ggplot(polished, aes(year, value, fill = continent, color = continent)) +
+  geom_smooth() +
+  facet_wrap(~ metric, scales = "free_y")
+```
+
+
+
+## Communicate https://rmarkdown.rstudio.com/
+
+* Create a report in .pdf and word format.
+
