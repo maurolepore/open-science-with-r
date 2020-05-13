@@ -53,14 +53,13 @@ gap_wide
 
 
 
-* Pivot on the columns that start with "gdp".
-* How long is the input?
-* How long is the output?
+* Pivot on the columns that `start_with("gdp")`. The result should be longer.
+* How long is the input and output?
 * What happened?
 
 ```{r}
 gap_wide %>% 
-  pivot_longer(cols = starts_with("gdp"))
+  pivot_______(cols = starts_____("gdp"))
 ```
 
 
@@ -72,7 +71,7 @@ gap_wide %>%
 ```{r}
 gap_wide %>% 
   pivot_longer(
-    cols = starts_with("gdp") | starts_with("life") | starts_with("pop")
+    cols = ___________("gdp") | ___________("life") | ___________("pop")
   )
 ```
 
@@ -88,20 +87,20 @@ gap_wide %>% pivot_longer(cols = -continent:-country)
 
 
 
-* Now also use `separate()` and the vector `c("metric", "year")`.
+* Now also use `separate()` to separate the column `name` into two columns: "metric" and "year". Hint: Use the vector `c("metric", "year")`.
 * We now achieved a tidy dataset. Why?
 
 ```{r}
 tidy <- gap_wide %>% 
   pivot_longer(cols = -continent:-country) %>% 
-  separate(col = name, into = c("metric", "year"))
+  ________(col = name, into = c("______", "____"))
 
 tidy
 ```
 
 
 
-* Use `unite()` and `pivot_wider()` to mess things up back again.
+It's easy to mess things up back again with `unite()` and `pivot_wider()`.
 
 ```{r}
 messy <- tidy %>% 
@@ -132,14 +131,14 @@ kelp
 * Use `complete()` to make explicit the missing data in `year` and `taxon`.
 
 ```{r}
-kelp %>% complete(year, taxon)
+kelp %>% ________(year, _____)
 ```
 
 
 
 Pretend in `year = 2000` you found no individual of `taxon` "Agarum".
 
-* Use the argument `fill` to fill missing data with the value `0`.
+You can use the argument `fill` to fill with `0` the missing data in `abundance`.
 
 ```{r}
 kelp %>% complete(year, taxon, fill = list(abundance = 0))
@@ -160,7 +159,7 @@ success_years
 * Use `full_seq()` to produce the full sequence of the years you surveyed.
 
 ```{r}
-all_years <- success_years %>% full_seq(period = 1)
+_________ <- success_years %>% ________(period = 1)
 all_years
 ```
 
@@ -170,12 +169,12 @@ all_years
 
 ```{r}
 kelp %>% 
-  complete(year = all_years, taxon = taxon)
+  complete(year = _________, taxon = taxon)
 ```
 
 
 
-You now want to study "Agarum" only.
+You now want to study "Agarum" only. Here is your dataset.
 
 ```{r}
 agarum <- kelp %>% 
@@ -185,10 +184,12 @@ agarum <- kelp %>%
 agarum
 ```
 
+
+
 * `fill()` the missing values of `taxon`.
 
 ```{r}
-agarum %>% fill(taxon)
+agarum %>% ____(taxon)
 ```
 
 * Now also `replace_na()` in `abundance` with the value `0`. Hint: One solution uses `list(abundance = 0)`
@@ -196,7 +197,7 @@ agarum %>% fill(taxon)
 ```{r}
 agarum %>% 
   fill(taxon) %>% 
-  replace_na(list(abundance = 0))
+  __________(list(abundance = _))
 ```
 
 Bored? 
