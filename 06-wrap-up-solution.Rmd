@@ -62,8 +62,8 @@ ggplot(polished, aes(year, value, fill = continent, color = continent)) +
 ```
 
 
+
 ## Communicate https://rmarkdown.rstudio.com/
 
-* Create a .pdf report.
-* Download it to your computer.
+* Create a report in .pdf and word format.
 
