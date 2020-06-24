@@ -1,4 +1,3 @@
-# 2020-05-12-open-science-with-r
+# Open science with R
 
-* Live code: https://github.com/maurolepore/2020-05-12-open-science-with-r
-* Lesson: https://maurolepore.github.io/2020-05-12-rice/
+Use [this project on rstudio.cloud](https://rstudio.cloud/project/1133167)
