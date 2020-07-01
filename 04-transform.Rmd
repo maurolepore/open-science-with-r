@@ -12,7 +12,7 @@ to load the `tidyverse` package into R.
 
 ```{r setup}
 # install.packages("tidyverse")
-_______(tidyverse)
+library(tidyverse)
 ```
 
 Bored? 
@@ -21,6 +21,7 @@ Bored?
 on your computer every session? 
 
 ## Data Transformation
+
 Data Transformation or Data Wrangling is the process of adding, removing or 
 doing calculations on existing columns or rows of data. 
 
@@ -29,6 +30,7 @@ analysis we do between the raw data and what we actually model, visualize
 and/ or report. 
 
 ## Recap - Importing Data
+
 Before we can transform the data, we need to import it into R. 
 The dataset we will be using today is the Gapminder data, which represents the 
 health and wealth of various nations. 
@@ -37,6 +39,7 @@ Have a look at the dataset visually online
 [here](https://github.com/carpentries-incubator/open-science-with-r/blob/gh-pages/data/gapminder.csv)
 
 ### Exercise
+
 To load this dataset into R, we'll need a link to the raw data. Click on the 
 "Raw" button in the above webpage to view the raw .csv data, and copy the link 
 into the following chunk of code:
@@ -47,7 +50,8 @@ into the following chunk of code:
 
 ```{r}
 # Import the gapminder data
-gapminder <- readr::read____("_________________________")
+url <- "https://raw.githubusercontent.com/carpentries-incubator/open-science-with-r/gh-pages/data/gapminder.csv"
+gapminder <- readr::read_csv(url)
 ```
 
 Bored?
@@ -60,6 +64,7 @@ load data located somewhere on your computer?
     - On Windows these look like "C:\Desktop\folder\data.csv"
 
 ## A VERY Brief Note on Files
+
 R *CAN* handle excel files (`.xlsx`), but plays much better with completely 
 unformatted `.csv` files. You can save a `.xlsx` file as a `.csv` directly in 
 Excel, just make sure it really is only a spreadsheet! (no fancy formatting, 
@@ -88,6 +93,7 @@ head(gapminder$year)
 
 
 ### Exercise 
+
 Insert an R chunk underneath this text and explore the gapminder dataset using 
 the `names()`, `dim()`, `nrow()` and `ncol()` functions. 
 * What are the column names? 
@@ -99,6 +105,7 @@ Bored?
 * Hint: you'll need to remember vectors `c()`
 
 ## dplyr 
+
 Let's start wrangling this large dataset using `dplyr`. 
 This package has many incredibly useful functions, but we're going to focus on 
 the five that you will probably use in every data science project that you work 
@@ -118,7 +125,9 @@ functions do:  https://i.imgur.com/uICSizl.png
 * The result is a transformed data frame
 
 ## filter() observations
-The filter function filters out rows of data, based on a "logical expression". 
+
+The filter function filters out rows of data, based on a "logical expression":
+
 * The first argument is your dataset
 * The second argument is a TRUE or FALSE question about one (or more) of the 
     variables
@@ -130,8 +139,8 @@ filter(gapminder, year == 2002)
 
 ```
 
-
 Your turn!
+
 Try to filter the gapminder data frame for observations where the life 
 expectancy is less than 29:
 
@@ -140,6 +149,7 @@ filter(gapminder, _____  ___ 29)
 ```
 
 Hints:
+
 * If you forget the column names, call names(gapminder)
 * Remember the logical expressions from the last lesson:
     * `==` 
@@ -150,6 +160,7 @@ Hints:
     * `=>` 
 
 Bored?
+
 * Filter for the year 2002
 * What happens when you try to filter for the year 2021?
 * Filter for observations where the `country` is "Cambodia"
@@ -157,6 +168,7 @@ Bored?
     (Hint: you will need %in% and seq())
 
 Exercise: 
+
 What is the mean life expectancy in Sweden? This problem might require using 
 two functions, as well as the `$` operator. 
 
@@ -166,6 +178,7 @@ mean_life_expectency <- ______
 ```
 
 ## select() variables
+
 We can select which variables we want to study with the `select()` function. 
 Suppose we're only really interested in the country, year and life expectancy 
 variables:
@@ -195,6 +208,7 @@ But this seems like a cumbersome process, especially for longer data pipelines.
 Luckily, R has a more elegant solution. 
 
 ## Introducing the pipe operator
+
 The pipe operator (which was imported by `dplyr` but actually comes from the 
 `magrittr` package) is one of the most useful functions to exist in R, for data 
 pipelines.
@@ -215,7 +229,6 @@ gapminder %>% head(3)
 This looks like what you would expect from `head(gapminder,3)`. 
 When you see `%>%` just think "and then". It passes the output from the 
 left-hand side to the first argument of the right-hand side. Remember our example: 
-
 ```{r}
 # instead of this...
 gap_cambodia  <- filter(gapminder, country == "Cambodia")
@@ -247,6 +260,7 @@ Tidyverse was designed in such a way that all of it's verbs can work together in
 a pipeline. 
 
 ## mutate() adds a new variable
+
 So far we have just been working with, and removing, variables and observations 
 that already exist in the data. What if we wanted to add a new variable? 
 For example, gapminder has a population variable and a GDP per capita variable, 
@@ -263,6 +277,7 @@ gapminder_with_gdp <- gapminder %>%
 ```
 
 ### Exercise
+
 Using the verbs we have learnt so far, and the pipe operator, find the maximum 
 gdpPercap of Egypt and the maximum gdpPercap of Vietnam. Create a new column 
 with mutate(). Hint: use max()
@@ -284,7 +299,9 @@ This is a little awkward. We have to copy and paste the exact same code twice,
 just to calculate the same thing for two different countries. 
 
 ## group_by() makes groups out of variables, that you can summarize()
-How would we calculate gdpPercap at the country-level for all countries? 
+
+How would we calculate gdpPercap at the country-level for all countries?
+
 ```{r}
 gapminder %>%
   group_by(country) %>%
@@ -320,6 +337,7 @@ gapminder %>%
 ```
 
 ## arrange() arranges rows 
+
 The gapminder dataset is organized in alphabetical order by country, but what if 
 we wanted to arrange our new max_gdp dataset by decreasing max_gdp? 
 
@@ -333,6 +351,7 @@ gapminder %>%
 ```
 
 ### Challenge 
+
 * Arrange your data frame in descending order (opposite of what we’ve done). 
 Expect that this is possible: see ?arrange for help
 * Find the maximum life expectancy for countries in Asia. What is the earliest 
@@ -344,11 +363,11 @@ year you encounter? The latest?
 ```
 
 ## Putting it together
+
 Before we get to the next module, I wanted to tease a full pipeline from import 
 to summary: 
 
 ```{r}
-
 # install libraries if necessary
 # install.packages('tidyverse')
 
@@ -368,6 +387,7 @@ gap_max_gdp <- gapminder %>%
 ```
 
 ## Joining datasets
+
 So far, we have only been working with one dataset. Before moving on, I want to 
 talk to you briefly about joining two different datasets by a common variable.
 T
@@ -417,12 +437,18 @@ rj %>% View()
 ```
 
 ## Takeaways
+
 * The filter() function subsets a dataframe by rows.
+
 * The select() function subsets a dataframe by columns.
+
 * The mutate function creates new columns in a dataframe.
+
 * The group_by() function creates groups of unique column values.
+
 * This grouping information is used by summarize() to make new columns that 
 define aggregate values across groupings.
-* The then operator %>% allows you to chain successive operations without 
+
+* The then pipe operator %>% allows you to chain successive operations without 
 needing to define intermediary variables for creating the most parsimonious, 
 easily read analysis.
