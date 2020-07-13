@@ -1,0 +1,452 @@
+---
+title: "Transform"
+output: github_document
+---
+
+<https://dplyr.tidyverse.org/>
+
+## Setup (and Warm-up)
+
+Use the tidyverse, which includes the package dplyr
+
+```{r setup}
+library(tidyverse)
+```
+
+Bored? 
+
+* Why do you think R doesn't automatically load every package you have installed 
+on your computer every session? 
+
+## Data Transformation
+
+Data Transformation or Data Wrangling is the process of adding, removing or 
+doing calculations on existing columns or rows of data. 
+
+Doing this programatically in R, means that we can keep track of every bit of 
+analysis we do between the raw data and what we actually model, visualize 
+and/ or report. 
+
+## Recap - Importing Data
+
+Before we can transform the data, we need to import it into R. 
+The dataset we will be using today is the Gapminder data, which represents the 
+health and wealth of various nations. 
+
+Have a look at the dataset visually online 
+[here](https://github.com/carpentries-incubator/open-science-with-r/blob/gh-pages/data/gapminder.csv)
+
+### Exercise
+
+To load this dataset into R, we'll need a link to the raw data. Click on the 
+"Raw" button in the above webpage to view the raw .csv data, and copy the link 
+into the following chunk of code:
+
+
+* The tidyverse package used to import (or read) data is called `readr`
+* Read the .csv file at <https://raw.githubusercontent.com/carpentries-incubator/open-science-with-r/gh-pages/data/gapminder.csv>
+
+```{r}
+# Import the gapminder data
+url <- "https://raw.githubusercontent.com/carpentries-incubator/open-science-with-r/gh-pages/data/gapminder.csv"
+gapminder <- readr::read_csv(url)
+```
+
+Bored?
+
+* We have been using exclusively online data for this workshop, how would you 
+load data located somewhere on your computer? 
+
+* Hint: You'll need to think about "filepaths":
+    - On Mac these look like "~/Desktop/folder/data.csv"
+    - On Windows these look like "C:\Desktop\folder\data.csv"
+
+## A VERY Brief Note on Files
+
+R *CAN* handle excel files (`.xlsx`), but plays much better with completely 
+unformatted `.csv` files. You can save a `.xlsx` file as a `.csv` directly in 
+Excel, just make sure it really is only a spreadsheet! (no fancy formatting, 
+pivot tables etc.)
+
+Copy-paste from the code to read all other files.
+
+## Explore the Dataset
+
+You can preview the data with `head()`, `tail()` or `str()`.
+
+```{r}
+head(gapminder)
+
+tail(gapminder)
+
+str(gapminder)
+```
+
+You can also select a single variable from the data frame using the `$`:
+```{r}
+gapminder$year
+
+head(gapminder$year)
+```
+
+
+### Exercise 
+
+Insert an R chunk underneath this text and explore the gapminder dataset using 
+the `names()`, `dim()`, `nrow()` and `ncol()` functions. 
+* What are the column names? 
+* How big is the dataset? 
+
+Bored?
+* Look at the helpfile for `?summary`. Try it out on gapminder
+* Can you reverse engineer `dim()` using some other functions you know? 
+* Hint: you'll need to remember vectors `c()`
+
+## dplyr 
+
+Let's start wrangling this large dataset using `dplyr`. 
+This package has many incredibly useful functions, but we're going to focus on 
+the five that you will probably use in every data science project that you work 
+on: 
+
+* `filter()`: pick observations by their values
+* `select()`: pick variables by their names
+* `mutate()`: create new variables with functions of existing variables
+* `summarise()`: collapse many values down to a single summary
+* `arrange()`: reorder the observations
+
+First have a look at this very useful visual to help explain what these 
+functions do:  https://i.imgur.com/uICSizl.png
+
+* All of these functions take a data frame as their first argument
+* The subsequent arguments describe what to do
+* The result is a transformed data frame
+
+## filter() observations
+
+The filter function filters out rows of data, based on a "logical expression":
+
+* The first argument is your dataset
+* The second argument is a TRUE or FALSE question about one (or more) of the 
+    variables
+
+```{r}
+# Let's say I only want data from 2002
+# this will return all values from the gapminder data frame where the year is 2002
+filter(gapminder, year == 2002)
+
+```
+
+Your turn!
+
+Try to filter the gapminder data frame for observations where the life 
+expectancy is less than 29:
+
+```{r}
+filter(gapminder, _____  ___ 29)
+```
+
+Hints:
+
+* If you forget the column names, call names(gapminder)
+* Remember the logical expressions from the last lesson:
+    * `==` 
+    * `!=` 
+    * `<` 
+    * `>` 
+    * `<=` 
+    * `=>` 
+
+Bored?
+
+* Filter for the year 2002
+* What happens when you try to filter for the year 2021?
+* Filter for observations where the `country` is "Cambodia"
+* Challenge: Filter for all years between 1992 and 2002 
+    (Hint: you will need %in% and seq())
+
+Exercise: 
+
+What is the mean life expectancy in Sweden? This problem might require using 
+two functions, as well as the `$` operator. 
+
+```{r}
+gapminder_in_sweden <- filter(___, ___)
+mean_life_expectency <- ______
+```
+
+## select() variables
+
+We can select which variables we want to study with the `select()` function. 
+Suppose we're only really interested in the country, year and life expectancy 
+variables:
+```{r}
+select(gapfinder, country, year, lifeExp)
+```
+
+Rather than selecting the variables we DO want, we can also just drop the 
+varaibles we DONT want by using a `-` sign. 
+Suppose  we're not really interested in the population variable, and we can 
+guess the continent variable from the country name? 
+
+```{r}
+select(gapfinder, -continent, -pop)
+```
+
+## Using filter() and select() together
+Let's say we wanted to filter for "Cambodia" and remove the continent and 
+lifeExp variables. We could do this in two steps: 
+
+```{r}
+gap_cambodia  <- filter(gapminder, country == "Cambodia")
+gap_cambodia2 <- select(gap_cambodia, -continent, -lifeExp)
+```
+
+But this seems like a cumbersome process, especially for longer data pipelines.
+Luckily, R has a more elegant solution. 
+
+## Introducing the pipe operator
+
+The pipe operator (which was imported by `dplyr` but actually comes from the 
+`magrittr` package) is one of the most useful functions to exist in R, for data 
+pipelines.
+
+The operator looks like this `%>%`, and you can type it easily using the RStudio 
+shortcut: Ctrl + Shift + M (Windows), Cmd + Shift + M (Mac)
+
+First let's have a demo, and see if you can figure out how it works: 
+```{r}
+gapminder %>% head()
+```
+
+This looks equivalent to calling `head(gapminder)`> Let's see another example
+```{r}
+gapminder %>% head(3)
+```
+
+This looks like what you would expect from `head(gapminder,3)`. 
+When you see `%>%` just think "and then". It passes the output from the 
+left-hand side to the first argument of the right-hand side. Remember our example: 
+```{r}
+# instead of this...
+gap_cambodia  <- filter(gapminder, country == "Cambodia")
+gap_cambodia2 <- select(gap_cambodia, -continent, -lifeExp)
+
+# we can do this
+gap_cambodia  <- gapminder %>% filter(country == "Cambodia")
+gap_cambodia2 <- gap_cambodia %>% select(-continent, -lifeExp)
+```
+
+We can actually take it one step further, and pipe this entire operation 
+together: 
+```{r}
+# we can do this
+gap_cambodia  <- gapminder %>% 
+  filter(country == "Cambodia") %>% 
+  select(-continent, -lifeExp)
+```
+
+Notice how I started a new line after every pipe call, and indent the next line? 
+When R sees a pipe call at the end of a line, it knows to look for another 
+indented function on the next line. This syntax can make reading R code a little 
+closer to speaking english: 
+"start with the gapminder data, and then
+filter for Cambodia, and then
+deselect the variables continent and lifeExp." 
+
+Tidyverse was designed in such a way that all of it's verbs can work together in 
+a pipeline. 
+
+## mutate() adds a new variable
+
+So far we have just been working with, and removing, variables and observations 
+that already exist in the data. What if we wanted to add a new variable? 
+For example, gapminder has a population variable and a GDP per capita variable, 
+what if we wanted to recover the actual gdp? 
+
+```{r}
+# this just prints the output of the operation. 
+gapminder %>%
+  mutate(gdp = pop * gdpPercap)
+
+# If i want to save it as an object to use later I have to assign it
+gapminder_with_gdp <- gapminder %>%
+  mutate(gdp = pop * gdpPercap)
+```
+
+### Exercise
+
+Using the verbs we have learnt so far, and the pipe operator, find the maximum 
+gdpPercap of Egypt and the maximum gdpPercap of Vietnam. Create a new column 
+with mutate(). Hint: use max()
+
+```{r}
+# Egypt:
+gapminder %>%
+filter(___) %>%
+mutate(___) %>%
+mutate(___)
+
+# Vietnam:
+gapminder %>%
+filter(___) %>%
+mutate(___)
+```
+
+This is a little awkward. We have to copy and paste the exact same code twice, 
+just to calculate the same thing for two different countries. 
+
+## group_by() makes groups out of variables, that you can summarize()
+
+How would we calculate gdpPercap at the country-level for all countries?
+
+```{r}
+gapminder %>%
+  group_by(country) %>%
+  mutate(gdp = pop * gdpPercap, max_gdp = max(gdp)) %>%
+  ungroup() # if you use group_by, also use ungroup() to save heartache later
+```
+
+We now have a `max_gdp` column that shows the maximum GDP, by country, of every 
+country in the dataset. But if you look closely, the values are repeated:
+
+```{r}
+gapminder %>%
+  group_by(country) %>%
+  mutate(gdp = pop * gdpPercap, max_gdp = max(gdp)) %>%
+  ungroup() %>% # if you use group_by, also use ungroup() to save heartache later
+  tail(30)
+```
+
+It is showing the maximum gdp for each country, but this value is indepdendent 
+of year, so it shows the same value for every year. What if we want to collapse 
+the data to only show the information we are interested in? 
+
+This is where `summarise()` comes in. `group_by()` and `summarise()` are very 
+commonly used together to perform tasks on groups of data, and distill the 
+output: 
+
+```{r}
+gapminder %>%
+  group_by(country) %>%
+  mutate(gdp = pop * gdpPercap) %>%
+  summarize(max_gdp = max(gdp)) %>%
+  ungroup()
+```
+
+## arrange() arranges rows 
+
+The gapminder dataset is organized in alphabetical order by country, but what if 
+we wanted to arrange our new max_gdp dataset by decreasing max_gdp? 
+
+```{r}
+gapminder %>%
+  group_by(country) %>%
+  mutate(gdp = pop * gdpPercap) %>%
+  summarize(max_gdp = max(gdp)) %>%
+  ungroup() %>%
+  arrange(max_gdp)
+```
+
+### Challenge 
+
+* Arrange your data frame in descending order (opposite of what we’ve done). 
+Expect that this is possible: see ?arrange for help
+* Find the maximum life expectancy for countries in Asia. What is the earliest 
+year you encounter? The latest? 
+* Hint: you can use either base::max or dplyr::arrange()…
+
+```{r}
+
+```
+
+## Putting it together
+
+Before we get to the next module, I wanted to tease a full pipeline from import 
+to summary: 
+
+```{r}
+# install libraries if necessary
+# install.packages('tidyverse')
+
+# load libraries
+library(tidyverse)
+
+# read in data
+gapminder <- readr::read_csv('https://raw.githubusercontent.com/carpentries-incubator/open-science-with-r/gh-pages/data/gapminder.csv') 
+
+## summarize
+gap_max_gdp <- gapminder %>% 
+  dplyr::select(-continent, -lifeExp) %>% # or select(country, year, pop, gdpPercap)
+  dplyr::group_by(country) %>%
+  dplyr::mutate(gdp = pop * gdpPercap) %>%
+  dplyr::summarize(max_gdp = max(gdp)) %>%
+  dplyr::ungroup() 
+```
+
+## Joining datasets
+
+So far, we have only been working with one dataset. Before moving on, I want to 
+talk to you briefly about joining two different datasets by a common variable.
+T
+here are different ways to do this. Suppose we have two datasets a and b, that 
+we want to join together by the variable year.
+We could: 
+* Join all matching rows from b to a
+* Join all matching rows from a to b
+* Join both datasets, retaining only rows that are present in both a an b
+* Join both datasets, retaining all rows and values in both datasets
+
+To get a better idea of what I mean by this, check out this diagram: 
+https://i.imgur.com/fV4St9d.png
+
+This idea of "relational data" can take a second to click, so for now, I leave 
+you to explore the following example. See if you can see for yourself what these 
+different types of matching and joining can produce: 
+
+```{r}
+## read in the data.
+co2 <- read_csv("https://raw.githubusercontent.com/carpentries-incubator/open-science-with-r/gh-pages/data/co2.csv")
+
+## explore
+co2 %>% head()
+co2 %>% dim() # 12
+
+## create new variable that is only 2007 data
+gap_2007 <- gapminder %>%
+  filter(year == 2007) 
+gap_2007 %>% dim() # 142  
+
+## left_join gap_2007 to co2
+lj <- left_join(gap_2007, co2, by = "country")
+
+## explore
+lj %>% dim() #142
+lj %>% summary() # lots of NAs in the co2_2017 columm
+lj %>% View() 
+
+## right_join gap_2007 and co2
+rj <- right_join(gap_2007, co2, by = "country")
+
+## explore
+rj %>% dim() # 12
+rj %>% summary()
+rj %>% View() 
+```
+
+## Takeaways
+
+* The filter() function subsets a dataframe by rows.
+
+* The select() function subsets a dataframe by columns.
+
+* The mutate function creates new columns in a dataframe.
+
+* The group_by() function creates groups of unique column values.
+
+* This grouping information is used by summarize() to make new columns that 
+define aggregate values across groupings.
+
+* The then pipe operator %>% allows you to chain successive operations without 
+needing to define intermediary variables for creating the most parsimonious, 
+easily read analysis.
