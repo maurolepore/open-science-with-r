@@ -5,82 +5,41 @@ output: github_document
 
 <https://dplyr.tidyverse.org/>
 
-## Setup (and Warm-up)
+## Setup
 
-Use the tidyverse, which includes the package dplyr
+It's common to start a script using required packages and importing the data.
+
+* Use tidyverse packages, which includes the package dplyr.
 
 ```{r setup}
 library(tidyverse)
 ```
 
-Bored? 
-
-* Why do you think R doesn't automatically load every package you have installed 
-on your computer every session? 
-
-## Data Transformation
-
-Data Transformation or Data Wrangling is the process of adding, removing or 
-doing calculations on existing columns or rows of data. 
-
-Doing this programatically in R, means that we can keep track of every bit of 
-analysis we do between the raw data and what we actually model, visualize 
-and/ or report. 
-
-## Recap - Importing Data
-
-Before we can transform the data, we need to import it into R. 
-The dataset we will be using today is the Gapminder data, which represents the 
-health and wealth of various nations. 
-
-Have a look at the dataset visually online 
-[here](https://github.com/carpentries-incubator/open-science-with-r/blob/gh-pages/data/gapminder.csv)
-
-### Exercise
-
-To load this dataset into R, we'll need a link to the raw data. Click on the 
-"Raw" button in the above webpage to view the raw .csv data, and copy the link 
-into the following chunk of code:
-
-
-* The tidyverse package used to import (or read) data is called `readr`
-* Read the .csv file at <https://raw.githubusercontent.com/carpentries-incubator/open-science-with-r/gh-pages/data/gapminder.csv>
+The dataset `gapminder` records human health and welth throught time.
 
 ```{r}
-# Import the gapminder data
-url <- "https://raw.githubusercontent.com/carpentries-incubator/open-science-with-r/gh-pages/data/gapminder.csv"
-gapminder <- readr::read_csv(url)
+# Import
+gapminder <- read_csv("data/gapminder.csv")
+
+# View
+gapminder
+```
+
+
+
+## Preview
+
+Preview gapminder.
+
+```{r}
+# See also View(gapminder)
+gapminder
 ```
 
 Bored?
 
-* We have been using exclusively online data for this workshop, how would you 
-load data located somewhere on your computer? 
+Compare 
 
-* Hint: You'll need to think about "filepaths":
-    - On Mac these look like "~/Desktop/folder/data.csv"
-    - On Windows these look like "C:\Desktop\folder\data.csv"
-
-## A VERY Brief Note on Files
-
-R *CAN* handle excel files (`.xlsx`), but plays much better with completely 
-unformatted `.csv` files. You can save a `.xlsx` file as a `.csv` directly in 
-Excel, just make sure it really is only a spreadsheet! (no fancy formatting, 
-pivot tables etc.)
-
-Copy-paste from the code to read all other files.
-
-## Explore the Dataset
-
-You can preview the data with `head()`, `tail()` or `str()`.
-
-```{r}
-head(gapminder)
-
-tail(gapminder)
-
-str(gapminder)
-```
 
 You can also select a single variable from the data frame using the `$`:
 ```{r}
