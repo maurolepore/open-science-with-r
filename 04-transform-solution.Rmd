@@ -69,7 +69,7 @@ This is one other way to view the `gapminder` data.
 glimpse(gapminder)
 ```
 
-Rewrite the code above to produce the same output but this time use the pipe.
+* Rewrite the code above to produce the same output but this time use the pipe.
 
 ```{r}
 gapminder %>% glimpse()
@@ -81,8 +81,8 @@ gapminder %>% glimpse()
 
 Solve the most common data manipulation challenges with the five main verbs:
 
-* `mutate()` adds new variables that are functions of existing variables.
-* `select()` picks variables based on their names.
+* `mutate()`
+* `select()`
 * `filter()` picks cases based on their values.
 * `summarise()` reduces multiple values down to a single summary.
 * `arrange()` changes the ordering of the rows.
@@ -91,81 +91,47 @@ They all input a data frame (spreadsheet) and output a modified data frame.
 
 ![](https://i.imgur.com/uICSizl.png)
 
-* glimpse of gapminder
+
+
+## `mutate()` adds new columns that are functions of existing columns
 
 ```{r}
-head(gapminder)
-```
-
-* Take gapminder; then glimpse it:
-
-```{r}
-# Same: Place holder
-gapminder %>% head(.)
-
-# Same: Most common syntax
-gapminder %>% head()
-```
-
-This looks equivalent to calling `head(gapminder)`> Let's see another example
-```{r}
-gapminder %>% head(3)
-```
-
-This looks like what you would expect from `head(gapminder,3)`. 
-When you see `%>%` just think "and then". It passes the output from the 
-left-hand side to the first argument of the right-hand side. Remember our example: 
-```{r}
-# instead of this...
-gap_cambodia  <- filter(gapminder, country == "Cambodia")
-gap_cambodia2 <- select(gap_cambodia, -continent, -lifeExp)
-
-# we can do this
-gap_cambodia  <- gapminder %>% filter(country == "Cambodia")
-gap_cambodia2 <- gap_cambodia %>% select(-continent, -lifeExp)
-```
-
-We can actually take it one step further, and pipe this entire operation 
-together: 
-```{r}
-# we can do this
-gap_cambodia  <- gapminder %>% 
-  filter(country == "Cambodia") %>% 
-  select(-continent, -lifeExp)
-```
-
-Notice how I started a new line after every pipe call, and indent the next line? 
-When R sees a pipe call at the end of a line, it knows to look for another 
-indented function on the next line. This syntax can make reading R code a little 
-closer to speaking english: 
-"start with the gapminder data, and then
-filter for Cambodia, and then
-deselect the variables continent and lifeExp." 
-
-Tidyverse was designed in such a way that all of it's verbs can work together in 
-a pipeline. 
-
-
-
-
-
-
-
-### `mutate()`
-
-`mutate()` adds new columns that are functions of existing columns.
-
-```{r}
-# Show the output
 gapminder %>%
   mutate(gdp = pop * gdpPercap)
-
-# Save the output in memory to reuse it below
-gapminder_with_gdp <- gapminder %>%
-  mutate(gdp = pop * gdpPercap)
 ```
 
-## filter() observations
+
+
+## `select()` picks columns based on their names
+
+From `gapminder`, you may want only the columns `country`, `year`, and `lifeExp`.
+
+* Take the dataset `gapminder` and then select only the columns you want.
+
+```{r}
+gapminder %>% 
+  select(country, year, lifeExp)
+```
+
+We can instead find all columns in `gapminder` and drop the irrelevant ones.
+
+* Take `gapminder`, and then find the name of all columns with `names()`.
+
+```{r}
+gapminder %>% 
+  names()
+```
+
+* Take `gapminder`, and then drop each irrelevant column as `-column`.
+
+```{r}
+gapminder %>% 
+  select(-continent, -pop, -gdpPercap)
+```
+
+
+
+## `filter()` picks cases based on their values.
 
 The filter function filters out rows of data, based on a "logical expression":
 
@@ -218,23 +184,37 @@ gapminder_in_sweden <- filter(___, ___)
 mean_life_expectency <- ______
 ```
 
-## select() variables
 
-We can select which variables we want to study with the `select()` function. 
-Suppose we're only really interested in the country, year and life expectancy 
-variables:
+
+
+
+
+
+
+
+
+
+
+
+## Leftovers
+
 ```{r}
-select(gapfinder, country, year, lifeExp)
+# instead of this...
+gap_cambodia  <- filter(gapminder, country == "Cambodia")
+gap_cambodia2 <- select(gap_cambodia, -continent, -lifeExp)
+
+# we can do this
+gap_cambodia  <- gapminder %>% filter(country == "Cambodia")
+gap_cambodia2 <- gap_cambodia %>% select(-continent, -lifeExp)
+
+# we can do this
+gap_cambodia  <- gapminder %>% 
+  filter(country == "Cambodia") %>% 
+  select(-continent, -lifeExp)
 ```
 
-Rather than selecting the variables we DO want, we can also just drop the 
-varaibles we DONT want by using a `-` sign. 
-Suppose  we're not really interested in the population variable, and we can 
-guess the continent variable from the country name? 
 
-```{r}
-select(gapfinder, -continent, -pop)
-```
+
 
 ## Using filter() and select() together
 Let's say we wanted to filter for "Cambodia" and remove the continent and 
