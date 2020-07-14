@@ -131,60 +131,27 @@ gapminder %>%
 
 
 
-## `filter()` picks cases based on their values.
+## `filter()` picks rows based on their values.
 
-The filter function filters out rows of data, based on a "logical expression":
+From `gapminder`, say you want to pick only rows where `year` is 2002.
 
-* The first argument is your dataset
-* The second argument is a TRUE or FALSE question about one (or more) of the 
-    variables
+* Take `gapminder`, then `filter()` with the logical expression `year == 2002`.
 
 ```{r}
-# Let's say I only want data from 2002
-# this will return all values from the gapminder data frame where the year is 2002
-filter(gapminder, year == 2002)
-
-```
-
-Your turn!
-
-Try to filter the gapminder data frame for observations where the life 
-expectancy is less than 29:
-
-```{r}
-filter(gapminder, _____  ___ 29)
-```
-
-Hints:
-
-* If you forget the column names, call names(gapminder)
-* Remember the logical expressions from the last lesson:
-    * `==` 
-    * `!=` 
-    * `<` 
-    * `>` 
-    * `<=` 
-    * `=>` 
-
-Bored?
-
-* Filter for the year 2002
-* What happens when you try to filter for the year 2021?
-* Filter for observations where the `country` is "Cambodia"
-* Challenge: Filter for all years between 1992 and 2002 
-    (Hint: you will need %in% and seq())
-
-Exercise: 
-
-What is the mean life expectancy in Sweden? This problem might require using 
-two functions, as well as the `$` operator. 
-
-```{r}
-gapminder_in_sweden <- filter(___, ___)
-mean_life_expectency <- ______
+gapminder %>% 
+  filter(year == 2002)
 ```
 
 
+
+You can filter with multiple logical expressions separated by comma ",". Consider these logical expressions: `==`, `!=`, `<`, `>`, `<=`, `=>`.
+
+* Take `gapminder`, and then `filter()` with two logical expressions to find the life expectancy of Argentina in 2007.
+
+```{r}
+gapminder %>% 
+  filter(country == "Argentina", year == 2007)
+```
 
 
 
