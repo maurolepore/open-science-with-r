@@ -84,8 +84,8 @@ Solve the most common data manipulation challenges with the five main verbs:
 * `mutate()` add columns.
 * `select()` picks columns.
 * `filter()` picks rows.
-* `summarise()` reduces multiple values down to a single summary.
 * `arrange()` changes the ordering of the rows.
+* `summarise()` summarises multiple values.
 
 They all input a data frame (spreadsheet) and output a modified data frame.
 
@@ -169,95 +169,82 @@ gapminder %>%
   filter(to_pick)
 ```
 
+## `arrange()` changes the ordering of the rows
 
+Where and when was the lowest life expectancy?
 
-
-## group_by() makes groups out of variables, that you can summarize()
-
-How would we calculate gdpPercap at the country-level for all countries?
-
-```{r}
-gapminder %>%
-  group_by(country) %>%
-  mutate(gdp = pop * gdpPercap, max_gdp = max(gdp)) %>%
-  ungroup() # if you use group_by, also use ungroup() to save heartache later
-```
-
-We now have a `max_gdp` column that shows the maximum GDP, by country, of every 
-country in the dataset. But if you look closely, the values are repeated:
+* Take `gapminder`, then arrange it by (ascending) `lifeExp`.
 
 ```{r}
 gapminder %>%
-  group_by(country) %>%
-  mutate(gdp = pop * gdpPercap, max_gdp = max(gdp)) %>%
-  ungroup() %>% # if you use group_by, also use ungroup() to save heartache later
-  tail(30)
+  arrange(lifeExp) %>% 
+  select(country, year, lifeExp)
 ```
 
-It is showing the maximum gdp for each country, but this value is indepdendent 
-of year, so it shows the same value for every year. What if we want to collapse 
-the data to only show the information we are interested in? 
+Where and when was the highest life expectancy?
 
-This is where `summarise()` comes in. `group_by()` and `summarise()` are very 
-commonly used together to perform tasks on groups of data, and distill the 
-output: 
+* Take `gapminder`, then arrange it by descending `lifeExp`.
 
 ```{r}
 gapminder %>%
-  group_by(country) %>%
-  mutate(gdp = pop * gdpPercap) %>%
-  summarize(max_gdp = max(gdp)) %>%
-  ungroup()
+  arrange(desc(lifeExp)) %>% 
+  select(country, year, lifeExp)
 ```
 
-## arrange() arranges rows 
 
-The gapminder dataset is organized in alphabetical order by country, but what if 
-we wanted to arrange our new max_gdp dataset by decreasing max_gdp? 
+
+## `summarise()` reduces multiple values to a single summary.
+
+```{r}
+gapminder %>% 
+  summarise(mean_lifeExp = mean(lifeExp))
+```
+
+This is not terribly useful; `summarize()` is best combined with `group_by()`.
+
+
+
+## group_by() perform any operation "by group"
+
+Improve the summary you just did:
+
+* Now calculate life expectancy for each continent.
 
 ```{r}
 gapminder %>%
-  group_by(country) %>%
-  mutate(gdp = pop * gdpPercap) %>%
-  summarize(max_gdp = max(gdp)) %>%
-  ungroup() %>%
-  arrange(max_gdp)
+  group_by(continent) %>% 
+  summarise(mean_lifeExp = mean(lifeExp))
 ```
 
-### Challenge 
 
-* Arrange your data frame in descending order (opposite of what we’ve done). 
-Expect that this is possible: see ?arrange for help
-* Find the maximum life expectancy for countries in Asia. What is the earliest 
-year you encounter? The latest? 
-* Hint: you can use either base::max or dplyr::arrange()…
+
+Improve the summary you just did:
+
+* Now also add the minimum and maximum life expectancy for each continent.
 
 ```{r}
-
+gapminder %>%
+  group_by(continent) %>% 
+  summarise(
+    mean_lifeExp = mean(lifeExp),
+    min_lifeExp = min(lifeExp),
+    max_lifeExp = max(lifeExp)
+  )
 ```
+
+
 
 ## Putting it together
 
-Before we get to the next module, I wanted to tease a full pipeline from import 
-to summary: 
+In the previous millenia, was the life expectancy in each continent explained by its mean GDP?
 
 ```{r}
-# install libraries if necessary
-# install.packages('tidyverse')
-
-# load libraries
-library(tidyverse)
-
-# read in data
-gapminder <- readr::read_csv('https://raw.githubusercontent.com/carpentries-incubator/open-science-with-r/gh-pages/data/gapminder.csv') 
-
-## summarize
-gap_max_gdp <- gapminder %>% 
-  dplyr::select(-continent, -lifeExp) %>% # or select(country, year, pop, gdpPercap)
-  dplyr::group_by(country) %>%
-  dplyr::mutate(gdp = pop * gdpPercap) %>%
-  dplyr::summarize(max_gdp = max(gdp)) %>%
-  dplyr::ungroup() 
+gapminder %>% 
+  group_by(continent) %>%
+  mutate(gdp = pop * gdpPercap) %>%
+  filter(year < 2000) %>% 
+  summarize(mean_gdp = mean(gdp), mean_lifeExp = mean(lifeExp)) %>% 
+  arrange(desc(mean_lifeExp), desc(mean_gdp))
 ```
 
 ## Joining datasets19622007, co2, by = "country")
