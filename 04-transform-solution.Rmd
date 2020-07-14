@@ -81,9 +81,9 @@ gapminder %>% glimpse()
 
 Solve the most common data manipulation challenges with the five main verbs:
 
-* `mutate()`
-* `select()`
-* `filter()` picks cases based on their values.
+* `mutate()` add columns.
+* `select()` picks columns.
+* `filter()` picks rows.
 * `summarise()` reduces multiple values down to a single summary.
 * `arrange()` changes the ordering of the rows.
 
@@ -131,7 +131,7 @@ gapminder %>%
 
 
 
-## `filter()` picks rows based on their values.
+## `filter()` picks rows based on their values
 
 From `gapminder`, say you want to pick only rows where `year` is 2002.
 
@@ -144,79 +144,30 @@ gapminder %>%
 
 
 
-You can filter with multiple logical expressions separated by comma ",". Consider these logical expressions: `==`, `!=`, `<`, `>`, `<=`, `=>`.
+You can filter with multiple logical expressions separated by comma "," or and "&". Consider these logical expressions: `==`, `!=`, `<`, `>`, `<=`, `=>`.
 
-* Take `gapminder`, and then `filter()` with two logical expressions to find the life expectancy of Argentina in 2007.
+* Take `gapminder`, and then `filter()` with two logical expressions to find the life expectancy of Afghanistan in 1962.
 
 ```{r}
 gapminder %>% 
-  filter(country == "Argentina", year == 2007)
+  filter(country == "Afghanistan" & year == 1962)
 ```
 
 
 
+One way to understand filter is to visualize the logical expressions it uses.
 
-
-
-
-
-
-
-
-## Leftovers
+* Predict what this pipe returns; then run it. Explain to yourself this result.
 
 ```{r}
-# instead of this...
-gap_cambodia  <- filter(gapminder, country == "Cambodia")
-gap_cambodia2 <- select(gap_cambodia, -continent, -lifeExp)
-
-# we can do this
-gap_cambodia  <- gapminder %>% filter(country == "Cambodia")
-gap_cambodia2 <- gap_cambodia %>% select(-continent, -lifeExp)
-
-# we can do this
-gap_cambodia  <- gapminder %>% 
-  filter(country == "Cambodia") %>% 
-  select(-continent, -lifeExp)
-```
-
-
-
-
-## Using filter() and select() together
-Let's say we wanted to filter for "Cambodia" and remove the continent and 
-lifeExp variables. We could do this in two steps: 
-
-```{r}
-gap_cambodia  <- filter(gapminder, country == "Cambodia")
-gap_cambodia2 <- select(gap_cambodia, -continent, -lifeExp)
-```
-
-But this seems like a cumbersome process, especially for longer data pipelines.
-Luckily, R has a more elegant solution. 
-
-
-## Exercise
-
-Using the verbs we have learnt so far, and the pipe operator, find the maximum 
-gdpPercap of Egypt and the maximum gdpPercap of Vietnam. Create a new column 
-with mutate(). Hint: use max()
-
-```{r}
-# Egypt:
 gapminder %>%
-filter(___) %>%
-mutate(___) %>%
-mutate(___)
-
-# Vietnam:
-gapminder %>%
-filter(___) %>%
-mutate(___)
+  # Drop irrelevant columns
+  select(-continent, -pop, -gdpPercap) %>%
+  # Add column to see the result of a logical expression I want to use
+  mutate(to_pick = country == "Afghanistan" & year == 1962) %>%
+  # The logical expression looks good, so I use it
+  filter(to_pick)
 ```
-
-This is a little awkward. We have to copy and paste the exact same code twice, 
-just to calculate the same thing for two different countries. 
 
 
 
@@ -309,49 +260,7 @@ gap_max_gdp <- gapminder %>%
   dplyr::ungroup() 
 ```
 
-## Joining datasets
-
-So far, we have only been working with one dataset. Before moving on, I want to 
-talk to you briefly about joining two different datasets by a common variable.
-T
-here are different ways to do this. Suppose we have two datasets a and b, that 
-we want to join together by the variable year.
-We could: 
-* Join all matching rows from b to a
-* Join all matching rows from a to b
-* Join both datasets, retaining only rows that are present in both a an b
-* Join both datasets, retaining all rows and values in both datasets
-
-To get a better idea of what I mean by this, check out this diagram: 
-https://i.imgur.com/fV4St9d.png
-
-This idea of "relational data" can take a second to click, so for now, I leave 
-you to explore the following example. See if you can see for yourself what these 
-different types of matching and joining can produce: 
-
-```{r}
-## read in the data.
-co2 <- read_csv("https://raw.githubusercontent.com/carpentries-incubator/open-science-with-r/gh-pages/data/co2.csv")
-
-## explore
-co2 %>% head()
-co2 %>% dim() # 12
-
-## create new variable that is only 2007 data
-gap_2007 <- gapminder %>%
-  filter(year == 2007) 
-gap_2007 %>% dim() # 142  
-
-## left_join gap_2007 to co2
-lj <- left_join(gap_2007, co2, by = "country")
-
-## explore
-lj %>% dim() #142
-lj %>% summary() # lots of NAs in the co2_2017 columm
-lj %>% View() 
-
-## right_join gap_2007 and co2
-rj <- right_join(gap_2007, co2, by = "country")
+## Joining datasets19622007, co2, by = "country")
 
 ## explore
 rj %>% dim() # 12
@@ -374,4 +283,4 @@ define aggregate values across groupings.
 
 * The then pipe operator %>% allows you to chain successive operations without 
 needing to define intermediary variables for creating the most parsimonious, 
-easily read analysis.
+easily read analysis.1962196219621962196219621962
