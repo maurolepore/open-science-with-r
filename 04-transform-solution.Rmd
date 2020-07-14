@@ -9,77 +9,161 @@ output: github_document
 
 It's common to start a script using required packages and importing the data.
 
-* Use tidyverse packages, which includes the package dplyr.
+* Use the package dplyr with `library(dplyr)`, or use the entire tidyverse with
 
-```{r setup}
+```{r}
 library(tidyverse)
 ```
 
-The dataset `gapminder` records human health and welth throught time.
+* Import `gapminder`: A global dataset of life-expectancy through time.
 
 ```{r}
-# Import
 gapminder <- read_csv("data/gapminder.csv")
+```
 
-# View
+* You can preview the `gapminder` dataset with
+
+```{r}
 gapminder
 ```
 
 
 
-## Preview
+## Aside: The pipe operator (`%>%`)
 
-Preview gapminder.
+Tidyverse functions are designed to work well with the pipe operator (`%>%`). It composes multiple transformations on the same data. Insert it with "Ctrl + Shift + M" on Windows, or "Cmd + Shift + M" on Mac.
+
+The pipe makes multiple transformations easier to understand.
+
+* When you apply a single function to a dataset, the pipe is needless.
 
 ```{r}
-# See also View(gapminder)
-gapminder
+# `f` of `x`.
+f(x)
+
+# Take `x`, then apply `f`.
+x %>% 
+  f()
 ```
 
-Bored?
+* When you apply multiple functions to a dataset, the pipe is more readable.
 
-Compare 
-
-
-You can also select a single variable from the data frame using the `$`:
 ```{r}
-gapminder$year
+# Hard to read: `h` of `g` of `f` of `x`
+h(g(f(x)))
 
-head(gapminder$year)
+# Easy to read: Take `x`, then apply `f`, then apply `g`, then apply `h`.
+x %>% 
+  f() %>% 
+  g() %>% 
+  h()
 ```
 
 
-### Exercise 
 
-Insert an R chunk underneath this text and explore the gapminder dataset using 
-the `names()`, `dim()`, `nrow()` and `ncol()` functions. 
-* What are the column names? 
-* How big is the dataset? 
+## Your turn
 
-Bored?
-* Look at the helpfile for `?summary`. Try it out on gapminder
-* Can you reverse engineer `dim()` using some other functions you know? 
-* Hint: you'll need to remember vectors `c()`
+This is one other way to view the `gapminder` data.
 
-## dplyr 
+```{r}
+glimpse(gapminder)
+```
 
-Let's start wrangling this large dataset using `dplyr`. 
-This package has many incredibly useful functions, but we're going to focus on 
-the five that you will probably use in every data science project that you work 
-on: 
+Rewrite the code above to produce the same output but this time use the pipe.
 
-* `filter()`: pick observations by their values
-* `select()`: pick variables by their names
-* `mutate()`: create new variables with functions of existing variables
-* `summarise()`: collapse many values down to a single summary
-* `arrange()`: reorder the observations
+```{r}
+gapminder %>% glimpse()
+```
 
-First have a look at this very useful visual to help explain what these 
-functions do:  https://i.imgur.com/uICSizl.png
 
-* All of these functions take a data frame as their first argument
-* The subsequent arguments describe what to do
-* The result is a transformed data frame
+
+## The five main verbs
+
+Solve the most common data manipulation challenges with the five main verbs:
+
+* `mutate()` adds new variables that are functions of existing variables.
+* `select()` picks variables based on their names.
+* `filter()` picks cases based on their values.
+* `summarise()` reduces multiple values down to a single summary.
+* `arrange()` changes the ordering of the rows.
+
+They all input a data frame (spreadsheet) and output a modified data frame.
+
+![](https://i.imgur.com/uICSizl.png)
+
+* glimpse of gapminder
+
+```{r}
+head(gapminder)
+```
+
+* Take gapminder; then glimpse it:
+
+```{r}
+# Same: Place holder
+gapminder %>% head(.)
+
+# Same: Most common syntax
+gapminder %>% head()
+```
+
+This looks equivalent to calling `head(gapminder)`> Let's see another example
+```{r}
+gapminder %>% head(3)
+```
+
+This looks like what you would expect from `head(gapminder,3)`. 
+When you see `%>%` just think "and then". It passes the output from the 
+left-hand side to the first argument of the right-hand side. Remember our example: 
+```{r}
+# instead of this...
+gap_cambodia  <- filter(gapminder, country == "Cambodia")
+gap_cambodia2 <- select(gap_cambodia, -continent, -lifeExp)
+
+# we can do this
+gap_cambodia  <- gapminder %>% filter(country == "Cambodia")
+gap_cambodia2 <- gap_cambodia %>% select(-continent, -lifeExp)
+```
+
+We can actually take it one step further, and pipe this entire operation 
+together: 
+```{r}
+# we can do this
+gap_cambodia  <- gapminder %>% 
+  filter(country == "Cambodia") %>% 
+  select(-continent, -lifeExp)
+```
+
+Notice how I started a new line after every pipe call, and indent the next line? 
+When R sees a pipe call at the end of a line, it knows to look for another 
+indented function on the next line. This syntax can make reading R code a little 
+closer to speaking english: 
+"start with the gapminder data, and then
+filter for Cambodia, and then
+deselect the variables continent and lifeExp." 
+
+Tidyverse was designed in such a way that all of it's verbs can work together in 
+a pipeline. 
+
+
+
+
+
+
+
+### `mutate()`
+
+`mutate()` adds new columns that are functions of existing columns.
+
+```{r}
+# Show the output
+gapminder %>%
+  mutate(gdp = pop * gdpPercap)
+
+# Save the output in memory to reuse it below
+gapminder_with_gdp <- gapminder %>%
+  mutate(gdp = pop * gdpPercap)
+```
 
 ## filter() observations
 
@@ -164,76 +248,8 @@ gap_cambodia2 <- select(gap_cambodia, -continent, -lifeExp)
 But this seems like a cumbersome process, especially for longer data pipelines.
 Luckily, R has a more elegant solution. 
 
-## Introducing the pipe operator
 
-The pipe operator (which was imported by `dplyr` but actually comes from the 
-`magrittr` package) is one of the most useful functions to exist in R, for data 
-pipelines.
-
-The operator looks like this `%>%`, and you can type it easily using the RStudio 
-shortcut: Ctrl + Shift + M (Windows), Cmd + Shift + M (Mac)
-
-First let's have a demo, and see if you can figure out how it works: 
-```{r}
-gapminder %>% head()
-```
-
-This looks equivalent to calling `head(gapminder)`> Let's see another example
-```{r}
-gapminder %>% head(3)
-```
-
-This looks like what you would expect from `head(gapminder,3)`. 
-When you see `%>%` just think "and then". It passes the output from the 
-left-hand side to the first argument of the right-hand side. Remember our example: 
-```{r}
-# instead of this...
-gap_cambodia  <- filter(gapminder, country == "Cambodia")
-gap_cambodia2 <- select(gap_cambodia, -continent, -lifeExp)
-
-# we can do this
-gap_cambodia  <- gapminder %>% filter(country == "Cambodia")
-gap_cambodia2 <- gap_cambodia %>% select(-continent, -lifeExp)
-```
-
-We can actually take it one step further, and pipe this entire operation 
-together: 
-```{r}
-# we can do this
-gap_cambodia  <- gapminder %>% 
-  filter(country == "Cambodia") %>% 
-  select(-continent, -lifeExp)
-```
-
-Notice how I started a new line after every pipe call, and indent the next line? 
-When R sees a pipe call at the end of a line, it knows to look for another 
-indented function on the next line. This syntax can make reading R code a little 
-closer to speaking english: 
-"start with the gapminder data, and then
-filter for Cambodia, and then
-deselect the variables continent and lifeExp." 
-
-Tidyverse was designed in such a way that all of it's verbs can work together in 
-a pipeline. 
-
-## mutate() adds a new variable
-
-So far we have just been working with, and removing, variables and observations 
-that already exist in the data. What if we wanted to add a new variable? 
-For example, gapminder has a population variable and a GDP per capita variable, 
-what if we wanted to recover the actual gdp? 
-
-```{r}
-# this just prints the output of the operation. 
-gapminder %>%
-  mutate(gdp = pop * gdpPercap)
-
-# If i want to save it as an object to use later I have to assign it
-gapminder_with_gdp <- gapminder %>%
-  mutate(gdp = pop * gdpPercap)
-```
-
-### Exercise
+## Exercise
 
 Using the verbs we have learnt so far, and the pipe operator, find the maximum 
 gdpPercap of Egypt and the maximum gdpPercap of Vietnam. Create a new column 
@@ -254,6 +270,9 @@ mutate(___)
 
 This is a little awkward. We have to copy and paste the exact same code twice, 
 just to calculate the same thing for two different countries. 
+
+
+
 
 ## group_by() makes groups out of variables, that you can summarize()
 
