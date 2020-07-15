@@ -3,7 +3,7 @@ title: "Visualization"
 output: github_document
 ---
 
-<https://github.com/maurolepore/2020-05-12-open-science-with-r>
+<https://github.com/maurolepore/open-science-with-r>
 
 ## Setup
 
