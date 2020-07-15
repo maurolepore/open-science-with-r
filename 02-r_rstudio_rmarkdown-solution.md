@@ -22,14 +22,14 @@ The “setup” chunk always runs before anything else.
 library(tidyverse)
 ```
 
-    ## ── Attaching packages ────────────────────────────────────────────── tidyverse 1.3.0 ──
+    ## ── Attaching packages ───────────────────────────────────────────── tidyverse 1.3.0 ──
 
     ## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
     ## ✓ tibble  3.0.3     ✓ dplyr   1.0.0
     ## ✓ tidyr   1.1.0     ✓ stringr 1.4.0
     ## ✓ readr   1.3.1     ✓ forcats 0.5.0
 
-    ## ── Conflicts ───────────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ── Conflicts ──────────────────────────────────────────────── tidyverse_conflicts() ──
     ## x dplyr::filter() masks stats::filter()
     ## x dplyr::lag()    masks stats::lag()
 
@@ -61,7 +61,7 @@ x + 8
     ## [1] 20
 
 ``` r
-x ** 2
+x**2
 ```
 
     ## [1] 144
@@ -79,7 +79,7 @@ x < 13
 In R, lines that are preceded by a hash symbol, `#`, will not be run:
 
 ``` r
-# If you execute this chunk, 
+# If you execute this chunk,
 # nothing will happen
 # This is a good way to write notes directly in your code to explain things
 
@@ -334,21 +334,21 @@ for you): \* `min()` \* `max()` \* `mean()` \* `log()`
 # help file you've called.
 
 # ?min
-min(c(1,2,3,4,5))
+min(c(1, 2, 3, 4, 5))
 ```
 
     ## [1] 1
 
 ``` r
 # ?max
-max(c(1,2,3,4,5))
+max(c(1, 2, 3, 4, 5))
 ```
 
     ## [1] 5
 
 ``` r
 # ?mean
-mean(c(1,2,3,4,5))
+mean(c(1, 2, 3, 4, 5))
 ```
 
     ## [1] 3
@@ -392,7 +392,7 @@ library(praise)
 praise()
 ```
 
-    ## [1] "You are peachy!"
+    ## [1] "You are glorious!"
 
 ## R Markdown
 

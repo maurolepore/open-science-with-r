@@ -43,7 +43,7 @@ What do you expect the following lines to output?
 ```{r}
 x + 8
 
-x ** 2
+x**2
 ```
 
 Preview: What do you expect this to return?
@@ -57,7 +57,7 @@ x < 13
 In R, lines that are preceded by a hash symbol, `#`, will not be run:
 
 ```{r}
-# If you execute this chunk, 
+# If you execute this chunk,
 # nothing will happen
 # This is a good way to write notes directly in your code to explain things
 
@@ -226,13 +226,13 @@ functions, and try to figure out what they do (I have done the first one for you
 # help file you've called.
 
 # ?min
-min(c(1,2,3,4,5))
+min(c(1, 2, 3, 4, 5))
 
 # ?max
-max(c(1,2,3,4,5))
+max(c(1, 2, 3, 4, 5))
 
 # ?mean
-mean(c(1,2,3,4,5))
+mean(c(1, 2, 3, 4, 5))
 
 # ?log
 # It defaults to the natural logarithm
