@@ -3,25 +3,23 @@ title: "Transform"
 output: github_document
 ---
 
-<https://dplyr.tidyverse.org/>
+<https://github.com/maurolepore/open-science-with-r>
 
 ## Setup
 
-It's common to start a script using required packages and importing the data.
-
-* Use the package dplyr with `library(dplyr)`, or use the entire tidyverse with
+It's common to start a script using required packages and importing the data. Use the dplyr package with `library(dplyr)`, or all tidyverse packages with
 
 ```{r}
 library(tidyverse)
 ```
 
-* Import `gapminder`: A global dataset of life-expectancy through time.
+Import `gapminder`: A global dataset of life-expectancy through time.
 
 ```{r}
 gapminder <- read_csv("data/gapminder.csv")
 ```
 
-* You can preview the `gapminder` dataset with
+Preview the `gapminder` dataset with
 
 ```{r}
 gapminder
@@ -29,15 +27,13 @@ gapminder
 
 
 
-## Aside: The pipe operator (`%>%`)
+## The pipe operator (`%>%`)
 
-Tidyverse functions are designed to work well with the pipe operator (`%>%`). It composes multiple transformations on the same data. Insert it with "Ctrl + Shift + M" on Windows, or "Cmd + Shift + M" on Mac.
+Tidyverse functions work well with the pipe operator (`%>%`). The pipe makes it easier to understand multiple transformations on the same data.
 
-The pipe makes multiple transformations easier to understand.
+When you apply a single function to a dataset, the pipe is needless.
 
-* When you apply a single function to a dataset, the pipe is needless.
-
-```{r}
+```{r eval=FALSE}
 # `f` of `x`.
 f(x)
 
@@ -46,9 +42,9 @@ x %>%
   f()
 ```
 
-* When you apply multiple functions to a dataset, the pipe is more readable.
+When you apply multiple functions to a dataset, the pipe is more readable.
 
-```{r}
+```{r, eval=FALSE}
 # Hard to read: `h` of `g` of `f` of `x`
 h(g(f(x)))
 
@@ -59,8 +55,6 @@ x %>%
   h()
 ```
 
-
-
 ## Your turn
 
 This is one other way to view the `gapminder` data.
@@ -69,7 +63,8 @@ This is one other way to view the `gapminder` data.
 glimpse(gapminder)
 ```
 
-* Rewrite the code above to produce the same output but this time use the pipe.
+* Rewrite the code above to produce the same output but this time use the pipe. 
+* Insert the pipe with *Ctrl+Shift+M* on Windows, or *Cmd+Shift+M* on Mac.
 
 ```{r}
 gapminder %>% glimpse()
@@ -77,7 +72,7 @@ gapminder %>% glimpse()
 
 
 
-## The five main verbs
+## The five main verzs
 
 Solve the most common data manipulation challenges with the five main verbs:
 
@@ -85,15 +80,15 @@ Solve the most common data manipulation challenges with the five main verbs:
 * `select()` picks columns.
 * `filter()` picks rows.
 * `arrange()` changes the ordering of the rows.
-* `summarise()` summarises multiple values.
+* `summarise()` summarizes multiple values.
 
 They all input a data frame (spreadsheet) and output a modified data frame.
 
-![](https://i.imgur.com/uICSizl.png)
 
 
+## `mutate()` adds new columns that are a function of existing columns
 
-## `mutate()` adds new columns that are functions of existing columns
+* Take `gapminder` and then add a new column `gdp` from `pop` times `gdpPercap`.
 
 ```{r}
 gapminder %>%
@@ -104,16 +99,16 @@ gapminder %>%
 
 ## `select()` picks columns based on their names
 
-From `gapminder`, you may want only the columns `country`, `year`, and `lifeExp`.
-
-* Take the dataset `gapminder` and then select only the columns you want.
+* Take `gapminder` and then select only `country`, `year`, and `lifeExp`.
 
 ```{r}
 gapminder %>% 
   select(country, year, lifeExp)
 ```
 
-We can instead find all columns in `gapminder` and drop the irrelevant ones.
+
+
+We can instead find all columns in a dataset and drop the irrelevant ones.
 
 * Take `gapminder`, and then find the name of all columns with `names()`.
 
@@ -122,7 +117,7 @@ gapminder %>%
   names()
 ```
 
-* Take `gapminder`, and then drop each irrelevant column as `-column`.
+* Now take `gapminder`, and then drop each irrelevant column with `-column`.
 
 ```{r}
 gapminder %>% 
@@ -131,9 +126,7 @@ gapminder %>%
 
 
 
-## `filter()` picks rows based on their values
-
-From `gapminder`, say you want to pick only rows where `year` is 2002.
+## `filter()` pick rows based on their values
 
 * Take `gapminder`, then `filter()` with the logical expression `year == 2002`.
 
@@ -143,10 +136,11 @@ gapminder %>%
 ```
 
 
-
-You can filter with multiple logical expressions separated by comma "," or and "&". Consider these logical expressions: `==`, `!=`, `<`, `>`, `<=`, `=>`.
+`filter()` can take multiple logical expressions separated by "," or "&".
 
 * Take `gapminder`, and then `filter()` with two logical expressions to find the life expectancy of Afghanistan in 1962.
+
+* Remember the logical operators: `==`, `!=`, `<`, `>`, `<=`, `=>`.
 
 ```{r}
 gapminder %>% 
@@ -157,7 +151,7 @@ gapminder %>%
 
 One way to understand filter is to visualize the logical expressions it uses.
 
-* Predict what this pipe returns; then run it. Explain to yourself this result.
+* Predict what this code returns; then run it. Explain to yourself this result.
 
 ```{r}
 gapminder %>%
@@ -168,6 +162,8 @@ gapminder %>%
   # The logical expression looks good, so I use it
   filter(to_pick)
 ```
+
+
 
 ## `arrange()` changes the ordering of the rows
 
@@ -183,7 +179,7 @@ gapminder %>%
 
 Where and when was the highest life expectancy?
 
-* Take `gapminder`, then arrange it by descending `lifeExp`.
+* Take `gapminder`, then arrange it by descending `lifeExp` (see `?desc()`).
 
 ```{r}
 gapminder %>%
@@ -193,11 +189,13 @@ gapminder %>%
 
 
 
-## `summarise()` reduces multiple values to a single summary.
+## `summarize()` reduces multiple values to a single summary.
+
+* Take `gapminder` and then summarize it by computing the mean life expectancy.
 
 ```{r}
 gapminder %>% 
-  summarise(mean_lifeExp = mean(lifeExp))
+  summarize(mean_lifeExp = mean(lifeExp))
 ```
 
 This is not terribly useful; `summarize()` is best combined with `group_by()`.
@@ -213,30 +211,14 @@ Improve the summary you just did:
 ```{r}
 gapminder %>%
   group_by(continent) %>% 
-  summarise(mean_lifeExp = mean(lifeExp))
-```
-
-
-
-Improve the summary you just did:
-
-* Now also add the minimum and maximum life expectancy for each continent.
-
-```{r}
-gapminder %>%
-  group_by(continent) %>% 
-  summarise(
-    mean_lifeExp = mean(lifeExp),
-    min_lifeExp = min(lifeExp),
-    max_lifeExp = max(lifeExp)
-  )
+  summarize(mean_lifeExp = mean(lifeExp))
 ```
 
 
 
 ## Putting it together
 
-In the previous millenia, was the life expectancy in each continent explained by its mean GDP?
+Compare continents before 2000: Did life expectancy increase with total `gdp`?
 
 ```{r}
 gapminder %>% 
@@ -247,27 +229,16 @@ gapminder %>%
   arrange(desc(mean_lifeExp), desc(mean_gdp))
 ```
 
-## Joining datasets19622007, co2, by = "country")
-
-## explore
-rj %>% dim() # 12
-rj %>% summary()
-rj %>% View() 
-```
-
 ## Takeaways
 
-* The filter() function subsets a dataframe by rows.
+* The pipe makes it easier to read multiple transformations on the same data.
 
-* The select() function subsets a dataframe by columns.
+* You can solve most data manipulation challenges with five dplyr verbs:
 
-* The mutate function creates new columns in a dataframe.
-
-* The group_by() function creates groups of unique column values.
-
-* This grouping information is used by summarize() to make new columns that 
-define aggregate values across groupings.
-
-* The then pipe operator %>% allows you to chain successive operations without 
-needing to define intermediary variables for creating the most parsimonious, 
-easily read analysis.1962196219621962196219621962
+  * `mutate()` adds new variables that are functions of existing variables
+  * `select()` picks variables based on their names.
+  * `filter()` picks cases based on their values.
+  * `summarise()` reduces multiple values down to a single summary.
+  * `arrange()` changes the ordering of the rows.
+  
+* Combine the main verbs with `group_by()` to perform any operation "by group".
