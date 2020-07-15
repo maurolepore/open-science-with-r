@@ -154,16 +154,16 @@ We can ask true or false questions about objects in R.
 
 ### Exercise
 
-I have filled in the first few answers, but try to figure out what all
-these logical operators do:
+  - Experiment to find out the meaning of each each logical operator.
+
+<!-- end list -->
 
 ``` r
 a_number <- 12
 ```
 
-`==` means ‘is equal to’
-
 ``` r
+# `==` means 'is equal to'
 a_number == 12
 ```
 
@@ -175,13 +175,7 @@ a_number == 10
 
     ## [1] FALSE
 
-`!=` means ‘is not equal to’
-
-``` r
-a_number != 10
-```
-
-    ## [1] TRUE
+`!=` means means ‘not equal to’
 
 ``` r
 a_number != 12
@@ -189,61 +183,19 @@ a_number != 12
 
     ## [1] FALSE
 
-`<` means ‘is less than’
-
 ``` r
-a_number < 13
+a_number != 10
 ```
 
     ## [1] TRUE
 
-``` r
-a_number < 10
-```
+`<` means …
 
-    ## [1] FALSE
+`>` means …
 
-`>` means ‘is greater than’
+`<=` means …
 
-``` r
-a_number > 13
-```
-
-    ## [1] FALSE
-
-``` r
-a_number > 10
-```
-
-    ## [1] TRUE
-
-`<=` means ‘is less than or equal to’
-
-``` r
-a_number <= 13
-```
-
-    ## [1] TRUE
-
-``` r
-a_number <= 10
-```
-
-    ## [1] FALSE
-
-`>=` means ‘is greater than or equal to’
-
-``` r
-a_number >= 13
-```
-
-    ## [1] FALSE
-
-``` r
-a_number >= 10
-```
-
-    ## [1] TRUE
+`>=` means …
 
 ## Vectors
 
@@ -290,28 +242,6 @@ names[1]
 
 2.  Convert the vector of kilos to pounds (hint: 1 kg = 2.2 pounds).
 3.  Calculate the total weight. (hint: type `?sum` in the console)
-
-<!-- end list -->
-
-``` r
-fish_kg <- c(12, 34, 20, 6.6)
-fish_kg
-```
-
-    ## [1] 12.0 34.0 20.0  6.6
-
-``` r
-fish_lb <- fish_kg * 2.2
-fish_lb
-```
-
-    ## [1] 26.40 74.80 44.00 14.52
-
-``` r
-sum(fish_lb)
-```
-
-    ## [1] 159.72
 
 ## Functions
 
@@ -392,7 +322,7 @@ library(praise)
 praise()
 ```
 
-    ## [1] "You are peachy!"
+    ## [1] "You are breathtaking!"
 
 ## R Markdown
 

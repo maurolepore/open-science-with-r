@@ -16,11 +16,10 @@ inside it and pressing *Crtl+Shift+Enter* (Windows) or *Cmd+Shift+Enter* (Mac).
 
 ## Setup
 
-The setup chunk always runs before anything else. 
-Don't worry about this step so much for now!
+The "setup" chunk always runs before anything else.
 
 ```{r setup}
-#install.packages("tidyverse")
+# install.packages("tidyverse")
 library(tidyverse)
 ```
 
@@ -120,37 +119,46 @@ I have filled in the first few answers, but try to figure out what all these log
 
 ```{r}
 a_number <- 12
-
-# `==` means 'is equal to'
-a_number == 12
 ```
 
+`==` means 'is equal to'
+
 ```{r}
-# `!=` means 'is not equal to'
+a_number == 12
+a_number == 10
+```
+
+`!=` means 'is not equal to'
+
+```{r}
 a_number != 10
 a_number != 12
 ```
 
+`<` means 'is less than'
+
 ```{r}
-# `<` means 'is less than'
 a_number < 13
 a_number < 10
 ```
 
+`>` means 'is greater than'
+
 ```{r}
-# `>` means 'is greater than'
 a_number > 13
 a_number > 10
 ```
 
+`<=` means 'is less than or equal to'
+
 ```{r}
-# `<=` means 'is less than or equal to'
 a_number <= 13
 a_number <= 10
 ```
 
+`>=` means 'is greater than or equal to'
+
 ```{r}
-# `>=` means 'is greater than or equal to'
 a_number >= 13
 a_number >= 10
 ```
@@ -185,6 +193,16 @@ names[1]
   * blue fish: 6.6 kg
 2. Convert the vector of kilos to pounds (hint: 1 kg = 2.2 pounds).
 3. Calculate the total weight. (hint: type `?sum` in the console)
+
+```{r}
+fish_kg <- c(12, 34, 20, 6.6)
+fish_kg
+
+fish_lb <- fish_kg * 2.2
+fish_lb
+
+sum(fish_lb)
+```
 
 ## Functions
 
