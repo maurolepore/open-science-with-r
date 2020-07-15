@@ -5,6 +5,8 @@ output: github_document
 
 <https://github.com/maurolepore/open-science-with-r>
 
+**Before you start, collapse all chunks with Alt+o.**
+
 ## Setup
 
 It's common to start a script using required packages and importing the data. Use the dplyr package with `library(dplyr)`, or all tidyverse packages with
