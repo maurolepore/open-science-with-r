@@ -124,8 +124,8 @@ gapminder %>%
 * Take `gapminder` and then select only `country`, `year`, and `lifeExp`.
 
 ```{r select-1}
-gapminder %>% 
-  select(country, year, lifeExp)
+
+
 ```
 
 ```{r select-2}
