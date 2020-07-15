@@ -91,8 +91,6 @@ x %>%
   h()
 ```
 
-## Your turn
-
 This is one other way to view the `gapminder` data.
 
 ``` r
@@ -114,6 +112,10 @@ glimpse(gapminder)
     Mac.
 
 <!-- end list -->
+
+``` r
+# gapminder ___ _________
+```
 
 ``` r
 gapminder %>% glimpse()
@@ -148,6 +150,46 @@ frame.
     `gdpPercap`.
 
 <!-- end list -->
+
+``` r
+gapminder %>%
+  mutate(gdp = pop * gdpPercap)
+```
+
+    ## # A tibble: 1,704 x 7
+    ##    country      year      pop continent lifeExp gdpPercap          gdp
+    ##    <chr>       <dbl>    <dbl> <chr>       <dbl>     <dbl>        <dbl>
+    ##  1 Afghanistan  1952  8425333 Asia         28.8      779.  6567086330.
+    ##  2 Afghanistan  1957  9240934 Asia         30.3      821.  7585448670.
+    ##  3 Afghanistan  1962 10267083 Asia         32.0      853.  8758855797.
+    ##  4 Afghanistan  1967 11537966 Asia         34.0      836.  9648014150.
+    ##  5 Afghanistan  1972 13079460 Asia         36.1      740.  9678553274.
+    ##  6 Afghanistan  1977 14880372 Asia         38.4      786. 11697659231.
+    ##  7 Afghanistan  1982 12881816 Asia         39.9      978. 12598563401.
+    ##  8 Afghanistan  1987 13867957 Asia         40.8      852. 11820990309.
+    ##  9 Afghanistan  1992 16317921 Asia         41.7      649. 10595901589.
+    ## 10 Afghanistan  1997 22227415 Asia         41.8      635. 14121995875.
+    ## # … with 1,694 more rows
+
+``` r
+gapminder %>%
+  mutate(gdp = pop * gdpPercap)
+```
+
+    ## # A tibble: 1,704 x 7
+    ##    country      year      pop continent lifeExp gdpPercap          gdp
+    ##    <chr>       <dbl>    <dbl> <chr>       <dbl>     <dbl>        <dbl>
+    ##  1 Afghanistan  1952  8425333 Asia         28.8      779.  6567086330.
+    ##  2 Afghanistan  1957  9240934 Asia         30.3      821.  7585448670.
+    ##  3 Afghanistan  1962 10267083 Asia         32.0      853.  8758855797.
+    ##  4 Afghanistan  1967 11537966 Asia         34.0      836.  9648014150.
+    ##  5 Afghanistan  1972 13079460 Asia         36.1      740.  9678553274.
+    ##  6 Afghanistan  1977 14880372 Asia         38.4      786. 11697659231.
+    ##  7 Afghanistan  1982 12881816 Asia         39.9      978. 12598563401.
+    ##  8 Afghanistan  1987 13867957 Asia         40.8      852. 11820990309.
+    ##  9 Afghanistan  1992 16317921 Asia         41.7      649. 10595901589.
+    ## 10 Afghanistan  1997 22227415 Asia         41.8      635. 14121995875.
+    ## # … with 1,694 more rows
 
 ``` r
 gapminder %>%
