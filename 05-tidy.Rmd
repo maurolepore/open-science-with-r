@@ -5,9 +5,11 @@ output: github_document
 
 <https://github.com/maurolepore/open-science-with-r>
 
+**Before you start, collapse all chunks with Alt+o.**
+
 ## Setup
 
-```{r setup}
+```{r}
 library(tidyverse)
 ```
 
@@ -30,7 +32,7 @@ cases
 
 
 
-* Explain these two approaches to achieve the same tidy dataset.
+* These two approaches achieve the same tidy result. Explain how they work.
 * The result is tidy. Why?
 
 ```{r}
@@ -59,7 +61,17 @@ gap_wide
 * How long is the input?
 * How long is the output?
 
-```{r}
+```{r pivot-1}
+
+
+```
+
+```{r pivot-2}
+gap_wide %>% 
+  ____________(cols = starts_with("___"))
+```
+
+```{r pivot-3}
 gap_wide %>% 
   pivot_longer(cols = starts_with("gdp"))
 ```
@@ -69,7 +81,21 @@ gap_wide %>%
 * Pivot on all columns except `continent` and `country`.
 * Refer to the columns you want to pivot on using `starts_with()` (`|` means or)
 
-```{r}
+```{r multiple-conditions-1}
+
+
+
+
+```
+
+```{r multiple-conditions-2}
+________ %>% 
+  pivot_longer(
+    cols = ___________("gdp") | ___________("life") | ___________("pop")
+  )
+```
+
+```{r multiple-conditions-3}
 gap_wide %>% 
   pivot_longer(
     cols = starts_with("gdp") | starts_with("life") | starts_with("pop")
@@ -82,7 +108,17 @@ This alternative is identical but shorter to type.
 
 * The result is still messy. Why?
 
-```{r}
+```{r exclude-1}
+
+
+```
+
+```{r exclude-2}
+gap_wide ___
+  pivot_longer(cols = -_________:-_______)
+```
+
+```{r exclude-3}
 gap_wide %>% 
   pivot_longer(cols = -continent:-country)
 ```
@@ -92,7 +128,23 @@ gap_wide %>%
 * Now also use `separate()` and the vector `c("metric", "year")`.
 * We now achieved a tidy dataset. Why?
 
-```{r}
+```{r separate-1}
+
+
+
+
+
+```
+
+```{r separate-2}
+tidy <- gap_wide %>% 
+  pivot_longer(cols = -continent:-country) %>% 
+  ________(col = name, into = c("______", "____"))
+
+tidy
+```
+
+```{r separate-3}
 tidy <- gap_wide %>% 
   pivot_longer(cols = -continent:-country) %>% 
   separate(col = name, into = c("metric", "year"))
@@ -104,7 +156,27 @@ tidy
 
 * Use `unite()` and `pivot_wider()` to mess things up back again.
 
-```{r}
+```{r messy-1}
+
+
+
+
+
+
+
+```
+
+```{r messy-2}
+messy <- tidy %>% 
+  _____("name", metric, year) %>% 
+  pivot______()
+
+messy
+
+gap_wide
+```
+
+```{r messy-3}
 messy <- tidy %>% 
   unite("name", metric, year) %>% 
   pivot_wider()
@@ -132,7 +204,18 @@ kelp
 
 * Use `complete()` to make explicit the missing data in `year` and `taxon`.
 
-```{r}
+```{r complete-1}
+
+
+```
+
+```{r complete-2}
+kelp %>% 
+  ________(year, _____)
+
+```
+
+```{r complete-1}
 kelp %>% 
   complete(year, taxon)
 ```
@@ -143,7 +226,17 @@ In `year = 2000` you found no individual of `taxon` "Agarum".
 
 * Use the argument `fill` to fill missing data with the value `0`.
 
-```{r}
+```{r fill-1}
+
+
+```
+
+```{r fill-2}
+kelp %>% 
+  complete(____, taxon, ____ = list(abundance = _))
+```
+
+```{r fill-3}
 kelp %>% 
   complete(year, taxon, fill = list(abundance = 0))
 ```
@@ -162,7 +255,21 @@ success_years
 
 * Use `full_seq()` to produce the full sequence of the years you surveyed.
 
-```{r}
+```{r full-seq-1}
+
+
+
+
+```
+
+```{r full-seq-2}
+all_years <- success_years %>% 
+  ________(period = 1)
+
+all_years
+```
+
+```{r full-seq-3}
 all_years <- success_years %>% 
   full_seq(period = 1)
 
@@ -173,7 +280,17 @@ all_years
 
 * Use `all_years` to `complete()` your dataset with explicit missing values.
 
-```{r}
+```{r all-years-1}
+
+
+```
+
+```{r all-years-2}
+kelp %>% 
+  ________(year = _________, taxon = taxon)
+```
+
+```{r all-years-3}
 kelp %>% 
   complete(year = all_years, taxon = taxon)
 ```
@@ -190,16 +307,40 @@ agarum <- kelp %>%
 agarum
 ```
 
+
+
 * `fill()` the missing values of `taxon`.
 
-```{r}
+```{r fill-taxon-1}
+
+
+```
+
+```{r fill-taxon-2}
+agarum ___ 
+  ____(_____)
+```
+
+```{r fill-taxon-3}
 agarum %>% 
   fill(taxon)
 ```
 
 * Now also `replace_na()` in `abundance` with the value `0`.
 
-```{r}
+```{r replace-na-1}
+
+
+
+```
+
+```{r replace-na-2}
+agarum %>% 
+  fill(taxon) %>% 
+  __________(list(_________ = _))
+```
+
+```{r replace-na-3}
 agarum %>% 
   fill(taxon) %>% 
   replace_na(list(abundance = 0))
