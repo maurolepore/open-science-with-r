@@ -3,22 +3,33 @@ title: "Wrap up"
 output: github_document
 ---
 
+<https://github.com/maurolepore/open-science-with-r>
+
+**Before you start, collapse all chunks with Alt+o**
+
+
+
 ## Setup https://www.tidyverse.org/
 
-```{r setup}
+* Use tidyverse packages.
+
+```{r}
 library(tidyverse)
 ```
 
+
+
 ## Import https://readr.tidyverse.org/
 
-* Read messy data from <https://raw.githubusercontent.com/carpentries-incubator/open-science-with-r/gh-pages/data/gapminder_wide.csv>.
+* Read messy data from "data/gap_wide.csv".
 
 ```{r}
-url <- "https://raw.githubusercontent.com/carpentries-incubator/open-science-with-r/gh-pages/data/gapminder_wide.csv"
+messy <- readr::read_csv("data/gap_wide.csv")
 
-messy <- readr::read_csv(url)
 messy
 ```
+
+
 
 ## Tidy https://tidyr.tidyverse.org/
 
@@ -51,13 +62,15 @@ polished <- tidy %>%
 polished
 ```
 
+
+
 ## Visualize https://ggplot2.tidyverse.org/
 
 Plot a model for each metric through time:
 
 * Map `color` and `fill` to `continent`.
 * Plot model with uncertainty around the mean.
-* Facet by `metric` (free the y variable -- see `scales`).
+* Facet by `metric` (free the `y` variable -- see `?scales`).
 
 ```{r}
 ggplot(polished, aes(year, value, fill = continent, color = continent)) +
@@ -69,5 +82,5 @@ ggplot(polished, aes(year, value, fill = continent, color = continent)) +
 
 ## Communicate https://rmarkdown.rstudio.com/
 
-* Create a report in .pdf and word format.
+* Create a report in .md, .pdf, and word format.
 
