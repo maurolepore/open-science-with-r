@@ -13,7 +13,15 @@ output: github_document
 
 * Use tidyverse packages.
 
-```{r}
+```{r use-tidyverse-1}
+
+```
+
+```{r use-tidyverse-2}
+library(_________)
+```
+
+```{r use-tidyverse-3}
 library(tidyverse)
 ```
 
@@ -23,7 +31,18 @@ library(tidyverse)
 
 * Read messy data from "data/gap_wide.csv".
 
-```{r}
+```{r import-1}
+
+
+```
+
+```{r import-2}
+messy <- readr::read_csv("_________________")
+
+messy
+```
+
+```{r import-3}
 messy <- readr::read_csv("data/gap_wide.csv")
 
 messy
@@ -36,7 +55,24 @@ messy
 * Pivot the data on everything except `continent` and `country`.
 * Separate the messy column into `metric` and `year`.
 
-```{r}
+```{r pivot-1}
+
+
+
+
+
+```
+
+```{r pivot-2}
+tidy <- messy %>% 
+  pivot_______(cols = -_________:-_______) %>% 
+  # Watch out! year is a character vector, not a number
+  ________(col = name, into = c("______", "____"))
+
+tidy
+```
+
+```{r pivot-3}
 tidy <- messy %>% 
   pivot_longer(cols = -continent:-country) %>% 
   # Watch out! year is a character vector, not a number
@@ -53,7 +89,25 @@ tidy
 * Filter it to include data since 1980.
 * Select all columns except `country`.
 
-```{r}
+```{r verbs-1}
+
+
+
+
+
+
+```
+
+```{r verbs-2}
+polished <- tidy %>% 
+  ______(year = as.integer(____)) %>%
+  ______(year > ____) %>% 
+  ______(-_______)
+
+polished
+```
+
+```{r verbs-3}
 polished <- tidy %>% 
   mutate(year = as.integer(year)) %>%
   filter(year > 1980) %>% 
@@ -72,7 +126,19 @@ Plot a model for each metric through time:
 * Plot model with uncertainty around the mean.
 * Facet by `metric` (free the `y` variable -- see `?scales`).
 
-```{r}
+```{r plot-1}
+
+
+
+```
+
+```{r plot-2}
+______(polished, ___(year, value, fill = _________, color = _________)) +
+  geom_______() +
+  ______wrap(~ ______, scales = "free_y")
+```
+
+```{r plot-3}
 ggplot(polished, aes(year, value, fill = continent, color = continent)) +
   geom_smooth() +
   facet_wrap(~ metric, scales = "free_y")
