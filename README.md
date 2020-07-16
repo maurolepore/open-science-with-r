@@ -1,6 +1,8 @@
 # Open science with R
 
-Use [this project on rstudio.cloud](https://rstudio.cloud/project/1133167).
+* [Project on rstudio.cloud](https://rstudio.cloud/project/1133167).
+* [Google doc](https://bit.ly/2020-07-15-rice).
+* [Repository](https://github.com/maurolepore/open-science-with-r).
 
 ---
 
